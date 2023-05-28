@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String      @id @default(cuid())
+  email     String      @unique
+  firstName String
+  lastName  String
+  phone     String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  addressId String
+  ratingId  String?
+  Cart      Cart[]
+  Order     Order[]
+  Rating    Rating[]
+  whishlist Whishlist[]
+  address   Address[]   @relation("AddressToUser")
+}
+
+model Whishlist {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  productId String
+  Product   Product  @relation(fields: [productId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model Address {
+  id        String     @id @default(cuid())
+  jalan     String?
+  rt        String?
+  rw        String?
+  kelurahan String
+  kecamatan String
+  kota      String
+  provinsi  String
+  kodePos   String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Merchant  Merchant[]
+  Order     Order[]
+  Shipping  Shipping[]
+  User      User[]     @relation("AddressToUser")
+}
+
+model Merchant {
+  id        String    @id @default(cuid())
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  addressId String
+  logoUrl   String
+  earnings  Float
+  address   Address   @relation(fields: [addressId], references: [id])
+  product   Product[]
+}
+
+model Product {
+  id         String      @id @default(cuid())
+  name       String
+  category   String
+  price      Int
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  merchantId String
+  ratingId   String
+  imageUrls  String[]
+  Cart       Cart[]
+  Order      Order[]
+  merchant   Merchant    @relation(fields: [merchantId], references: [id])
+  rating     Rating[]
+  Whishlist  Whishlist[]
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  rating    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  productId String
+  Product   Product  @relation(fields: [productId], references: [id])
+  rater     User     @relation(fields: [userId], references: [id])
+}
+
+model Cart {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  productId String
+  quantity  Int
+  price     Float
+  Product   Product  @relation(fields: [productId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model Order {
+  id        String     @id @default(cuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  userId    String
+  productId String
+  quantity  Int
+  price     Float
+  status    String
+  addressId String?
+  Address   Address?   @relation(fields: [addressId], references: [id])
+  Product   Product    @relation(fields: [productId], references: [id])
+  User      User       @relation(fields: [userId], references: [id])
+  Shipping  Shipping[]
+}
+
+model Shipping {
+  id                 String   @id @default(cuid())
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  orderId            String
+  status             String
+  courier            String
+  resi               String
+  cost               Float
+  service            String
+  etd                String
+  destinationAddress String
+  addressId          String
+  originAddressId    String
+  Order              Order    @relation(fields: [orderId], references: [id])
+  originAddress      Address  @relation(fields: [originAddressId], references: [id])
+}
