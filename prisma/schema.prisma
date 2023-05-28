@@ -18,6 +18,7 @@ model User {
   updatedAt DateTime    @updatedAt
   addressId String
   ratingId  String?
+  photoUrl  String
   Cart      Cart[]
   Order     Order[]
   Rating    Rating[]
@@ -59,8 +60,8 @@ model Merchant {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   addressId String
-  logoUrl   String
   earnings  Float
+  logoUrl   String
   address   Address   @relation(fields: [addressId], references: [id])
   product   Product[]
 }
