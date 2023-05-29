@@ -3,7 +3,6 @@
 import Navbar from "@/components/layout/Navbar";
 import "../globals.css";
 import { Inter } from "next/font/google";
-import { useRouter } from "next/navigation";
 import { Provider } from "react-redux";
 import { store } from "@/store";
 

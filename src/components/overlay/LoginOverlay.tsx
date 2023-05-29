@@ -13,7 +13,7 @@ export default function LoginOverlay() {
   return (
     <div className='w-screen h-screen absolute flex items-center top-0 z-20'>
       <div
-      className="w-full h-full absolute top-0 left-0"
+        className='w-full h-full fixed top-0 left-0'
         style={{
           backgroundColor: "rgba(0,0,0,0.5)",
         }}
@@ -23,6 +23,15 @@ export default function LoginOverlay() {
         <h1 className='font-semibold text-[#5F72FF] text-2xl'>Masuk</h1>
         <Auth
           supabaseClient={supabase}
+          localization={
+            {
+              variables: {
+                magic_link: {
+                  button_label: "Kirim Link Verifikasi",
+                }
+              }
+            }
+          }
           appearance={{
             theme: ThemeSupa,
             variables: {
@@ -36,6 +45,7 @@ export default function LoginOverlay() {
           }}
           providers={["google"]}
           view='magic_link'
+          showLinks={true}
         />
       </div>
     </div>

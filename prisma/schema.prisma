@@ -16,14 +16,23 @@ model User {
   phone     String
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
-  addressId String
+  addressId String?
   ratingId  String?
-  photoUrl  String
+  photoUrl  String?
+  biodata   Biodata?
   Cart      Cart[]
   Order     Order[]
-  Rating    Rating[]
+  Review    Reviews[]
   whishlist Whishlist[]
   address   Address[]   @relation("AddressToUser")
+}
+
+model Biodata {
+  id        String    @id @default(cuid())
+  birthdate DateTime?
+  gender    Gender?
+  userId    String    @unique
+  User      User      @relation(fields: [userId], references: [id])
 }
 
 model Whishlist {
@@ -37,21 +46,58 @@ model Whishlist {
 }
 
 model Address {
-  id        String     @id @default(cuid())
-  jalan     String?
-  rt        String?
-  rw        String?
-  kelurahan String
-  kecamatan String
-  kota      String
-  provinsi  String
-  kodePos   String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  Merchant  Merchant[]
-  Order     Order[]
-  Shipping  Shipping[]
-  User      User[]     @relation("AddressToUser")
+  id         String     @id @default(cuid())
+  jalan      String?
+  rt         String?
+  rw         String?
+  kodePos    String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  districtId Int
+  provinceId Int
+  regencyId  Int
+  villageId  BigInt
+  kecamatan  District   @relation(fields: [districtId], references: [id])
+  provinsi   Province   @relation(fields: [provinceId], references: [id])
+  kota       Regency    @relation(fields: [regencyId], references: [id])
+  kelurahan  Village    @relation(fields: [villageId], references: [id], onUpdate: NoAction)
+  Merchant   Merchant[]
+  Order      Order[]
+  Shipping   Shipping[]
+  User       User[]     @relation("AddressToUser")
+}
+
+model Province {
+  id      Int       @id @default(autoincrement())
+  name    String
+  Address Address[]
+  Regency Regency[]
+}
+
+model Regency {
+  id         Int        @id @default(autoincrement())
+  name       String
+  provinceId Int
+  Address    Address[]
+  District   District[]
+  province   Province   @relation(fields: [provinceId], references: [id])
+}
+
+model District {
+  id        Int       @id @default(autoincrement())
+  name      String
+  regencyId Int
+  Address   Address[]
+  regency   Regency   @relation(fields: [regencyId], references: [id])
+  Village   Village[]
+}
+
+model Village {
+  id         BigInt    @id
+  name       String
+  districtId Int
+  Address    Address[]
+  district   District  @relation(fields: [districtId], references: [id], onUpdate: NoAction)
 }
 
 model Merchant {
@@ -69,29 +115,42 @@ model Merchant {
 model Product {
   id         String      @id @default(cuid())
   name       String
-  category   String
-  price      Int
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
   merchantId String
-  ratingId   String
   imageUrls  String[]
+  detail     String
+  reviewId   String?
+  category   Category
   Cart       Cart[]
   Order      Order[]
   merchant   Merchant    @relation(fields: [merchantId], references: [id])
-  rating     Rating[]
+  rating     Reviews[]
+  variant    Variant[]
   Whishlist  Whishlist[]
 }
 
-model Rating {
+model Variant {
   id        String   @id @default(cuid())
-  rating    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  productId String
+  name      String
+  price     Int
+  stock     Int
+  Product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Reviews {
+  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   userId    String
   productId String
+  rating    Int
+  comment   String
   Product   Product  @relation(fields: [productId], references: [id])
-  rater     User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
 }
 
 model Cart {
@@ -138,4 +197,57 @@ model Shipping {
   originAddressId    String
   Order              Order    @relation(fields: [orderId], references: [id])
   originAddress      Address  @relation(fields: [originAddressId], references: [id])
+}
+
+enum Gender {
+  LAKI_LAKI
+  PEREMPUAN
+}
+
+enum Category {
+  LAPTOP
+  SMARTPHONE
+  HEADPHONE
+  EARPHONE
+  KEYBOARD
+  MOUSE
+  MONITOR
+  SPEAKER
+  PRINTER
+  SCANNER
+  PROJECTOR
+  WEBCAM
+  ROUTER
+  MODEM
+  ACCESSORIES
+  STORAGE
+  GAMING
+  SOFTWARE
+  NETWORKING
+  SERVER
+  COMPONENT
+  CAMERA
+  TV
+  AUDIO
+  VIDEO
+  HOUSEHOLD
+  KITCHEN
+  FURNITURE
+  FASHION
+  BEAUTY
+  HEALTH
+  BABY
+  TOYS
+  SPORT
+  AUTOMOTIVE
+  BOOK
+  MUSIC
+  MOVIE
+  GIFT
+  FOOD
+  DRINK
+  TRAVEL
+  TICKET
+  SERVICE
+  OTHER
 }
