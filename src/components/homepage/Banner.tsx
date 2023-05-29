@@ -2,7 +2,7 @@ import Loading from "@/app/(auth page)/login/loading";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react.es";
 import Image from "next/image";
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 const dummyData = [
   {
@@ -27,6 +27,7 @@ export default function Banner() {
   // https://keen-slider.io/examples
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
+
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     loop: true,
     slideChanged(slider) {
@@ -36,6 +37,16 @@ export default function Banner() {
       setLoaded(true);
     },
   });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      instanceRef.current?.next();
+    }, 5000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [instanceRef]);
 
   return (
     <div className='relative w-full'>
@@ -71,7 +82,7 @@ export default function Banner() {
                   style={{
                     scale: currentSlide === idx ? 1.5 : "",
                   }}
-                  className='w-2 h-2 bg-[#c5c5c5] rounded-full mx-1 p-1 focus:outline-none'
+                  className='w-2 h-2 bg-white rounded-full mx-1 p-1 focus:outline-none'
                 ></button>
               );
             })}
