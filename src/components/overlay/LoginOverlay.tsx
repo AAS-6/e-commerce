@@ -23,15 +23,13 @@ export default function LoginOverlay() {
         <h1 className='font-semibold text-[#5F72FF] text-2xl'>Masuk</h1>
         <Auth
           supabaseClient={supabase}
-          localization={
-            {
-              variables: {
-                magic_link: {
-                  button_label: "Kirim Link Verifikasi",
-                }
-              }
-            }
-          }
+          localization={{
+            variables: {
+              magic_link: {
+                button_label: "Kirim Link Verifikasi",
+              },
+            },
+          }}
           appearance={{
             theme: ThemeSupa,
             variables: {

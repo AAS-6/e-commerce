@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <header className='px-4 flex z-50 bg-white items-center justify-around py-3 sticky top-0'>
-      <Logo height={72} width={72} />
+      <Logo height={144} width={144} />
       <Search />
       <Menu />
       {!session && <NavbarButton />}

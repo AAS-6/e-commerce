@@ -11,9 +11,9 @@ export default function Logo({
   return (
     <Link href='/' className='flex items-center'>
       <Image
-        src='/navbar/logo.svg'
-        width={width || 72}
-        height={height || 72}
+        src='/navbar/logo-1.svg'
+        width={width || 256}
+        height={height || 256}
         alt='Logo'
       />
     </Link>

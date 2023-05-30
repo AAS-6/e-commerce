@@ -68,7 +68,7 @@ export default function Banner() {
           );
         })}
         {loaded && instanceRef.current && (
-          <div className='flex py-3 z-20 justify-center absolute bottom-0 left-1/2 -translate-x-1/2'>
+          <div className='flex py-3 z-10 justify-center absolute bottom-0 left-1/2 -translate-x-1/2'>
             {[
               ...Array(instanceRef.current.track.details.slides.length).keys(),
             ].map(idx => {
