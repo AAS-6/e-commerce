@@ -7,13 +7,23 @@ function handleSubmit(e: any) {
   console.log("submit");
 }
 
+async function handleLogin(e: any) {
+  e.preventDefault();
+  console.log("login");
+}
+
+async function handleRegister(e: any) {
+  e.preventDefault();
+  console.log("register");
+}
+
 export default function RegisterPage() {
   return (
     <>
      <div className="flex justify-center items-center h-screen">
         <div className="flex flex-col p-10 rounded-xl shadow-[0px_0px_25px_5px_rgba(0,0,0,0.1)]">
           <h1 className="text-4xl font-bold text-center pb-10">AAS E-Commerce</h1>
-          <div className="flex">
+          <div className="flex py-14 px-20 justify-evenly w-full">
             <div className="flex flex-col text-center justify-center items-center px-8 mr-16 ">
               <Image src="/favicon.ico" width={250} height={250} alt=""/>
               <h4 className="font-bold text-3xl pt-4 pb-1">Beli mudah hanya di AAS</h4>
