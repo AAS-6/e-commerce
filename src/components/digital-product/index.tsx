@@ -4,7 +4,7 @@ import Topup from "./Topup";
 
 export default function Wrapper() {
   return (
-    <section className='flex w-[85%] bg-white border-2 rounded-lg p-2 mb-10 mt-12 bg-whites max-w-5xl'>
+    <section className='flex w-[85%] bg-white border-2 rounded-lg p-4 h-[20vh] mb-10 mt-12 bg-whites'>
       <SpecialCategory />
       <Topup />
     </section>

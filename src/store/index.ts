@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import uiReducer from "./ui-slice";
+import digitalReducer from "./digital-slice";
 
 export const store = configureStore({
   reducer: {
     ui: uiReducer,
+    digital: digitalReducer,
   },
 });
 
