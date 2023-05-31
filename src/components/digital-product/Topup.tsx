@@ -6,14 +6,50 @@ import { Field, Form, Formik, withFormik } from "formik";
 
 export default function Topup() {
   const active = useSelector(selectActive);
+  const Pulsa = () => {
+    return (
+      <div>
+        <Formik
+          onSubmit={(data) => {
+            console.log(data);
+          }}
+          initialValues={{nomor: '', nominal: ''}}
+        >
+          <Form className="flex justify-center items-center p-4 border-t-2">
+            <div className="w-full">
+              <p className="opacity-50">Nomor Telepon</p>
+              <Field
+                type='text'
+                name='nomor'
+                placeholder='081234567890'
+                className="w-full px-4 py-2 border-2 rounded-lg"
+              />
+            </div>
+            <div className="mx-3 w-full">
+              <p className="opacity-50">Nominal</p>
+              <Field
+                type='text'
+                name='nominal'
+                placeholder='Rp50.000,-'
+                className="w-full px-4 py-[6px] border-2 rounded-lg "
+              />
+            </div>
+            <button type='submit' className="self-end px-5 py-[9px] bg-[#5F72FF] rounded-lg text-white">Beli</button>
+          </Form>
+        </Formik>
+      </div>
+    )
+  }
   return (
-    <div className='basis-1/2 mx-3 h-full'>
+    <div className='basis-1/2 mx-3 h-full '>
       <h2 className='font-semibold text-lg'>Top Up & Tagihan</h2>
-      <div className='flex flex-col rounded-lg h-full mt-2'>
+      <div className='flex flex-col rounded-lg h-full mt-2 border-2'>
         <div className='basis-1/5'>
           <Menu />
         </div>
-        <div className='basis-4/5'>{active}</div>
+        <div className='basis-4/5'>
+          <Pulsa />
+        </div>
       </div>
     </div>
   );
