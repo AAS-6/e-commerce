@@ -14,14 +14,12 @@ export default function Carousel({title}: any){
     mode: "free-snap",
     slides: {
       origin: "auto",
-      perView: 5,
+      perView: 6,
     },
   });
 
-  const renderCountdown = ({ hours, minutes, seconds, completed }: any) => {
-    if (completed) {
-      return alert("waktu habis");
-    }
+  const renderCountdown = ({ hours, minutes, seconds, completed }: any): React.ReactNode => {
+    
     return (
     <>
         <span className="bg-[#D9D9D9] p-[4.5px] mx-1 text-white">
@@ -42,7 +40,7 @@ export default function Carousel({title}: any){
   };
 
   return (
-    <div className="flex flex-col my-5">
+    <div className="flex flex-col my-5 max-w-[1440px]">
       <div className="flex items-center py-2">
         <h2 className="font-bold text-2xl">{title}</h2>
         <p className="text-[15px] text-[#8E7F7F] ml-2">Berakhir dalam</p>
@@ -61,7 +59,7 @@ export default function Carousel({title}: any){
         />
         <div
           ref={sliderRef}
-          className="keen-slider max-w-[1024px] ml-44 overflow-x-hidden"
+          className="keen-slider ml-44 overflow-x-hidden"
         >
           {number.map((number) => (
             <div
