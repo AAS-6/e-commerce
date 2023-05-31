@@ -5,6 +5,7 @@ import "../globals.css";
 import { Inter } from "next/font/google";
 import { Provider } from "react-redux";
 import { store } from "@/store";
+import Footer from "@/components/layout/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function HomeLayout({
     <Provider store={store}>
       <Navbar />
       {children}
+      <Footer />
     </Provider>
   );
 }
