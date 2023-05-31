@@ -3,6 +3,9 @@ import { DigitalUIState, selectActive, setActive } from "@/store/digital-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { Field, Form, Formik, withFormik } from "formik";
+import Pulsa from "./Pulsa";
+import PaketData from "./PaketData";
+import Flight from "./Flight";
 
 export default function Topup() {
   const active = useSelector(selectActive);
@@ -41,15 +44,13 @@ export default function Topup() {
     )
   }
   return (
-    <div className='basis-1/2 mx-3 h-full '>
+    <div className='basis-1/2 ml-3 h-full flex flex-col'>
       <h2 className='font-semibold text-lg'>Top Up & Tagihan</h2>
-      <div className='flex flex-col rounded-lg h-full mt-2 border-2'>
-        <div className='basis-1/5'>
-          <Menu />
-        </div>
-        <div className='basis-4/5'>
-          <Pulsa />
-        </div>
+      <div className='flex flex-col rounded-lg border-2 h-full mt-2'>
+        <Menu />
+        {active === "Pulsa" && <Pulsa />}
+        {active === "Paket Data" && <PaketData />}
+        {active === "Flight" && <Flight />}
       </div>
     </div>
   );
@@ -92,7 +93,7 @@ const Menu = () => {
           onClick={() => {
             handleClick(item.name, idx);
           }}
-          className='cursor-pointer border-y-2 border-transparent py-1 w-4/5 text-center'
+          className='cursor-pointer py-2 border-y-2 border-transparent w-4/5 text-center'
         >
           {item.name}
         </li>
