@@ -58,9 +58,9 @@ export default function Banner() {
                 <Image
                   src={item.src}
                   alt={item.alt}
-                  width={1920}
+                  width={1440}
                   height={469}
-                  className='object-cover w-full h-full'
+                  className='object-cover rounded-lg w-full h-full max-w-[1440px] mx-auto'
                   quality={100}
                 />
               )}
