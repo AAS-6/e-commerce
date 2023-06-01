@@ -18,7 +18,7 @@ export default function shop() {
           </div>
           <div className="flex justify-center">
             <Image
-              src="/profile.svg"
+              src="/profile/profile.svg"
               width={140}
               height={140}
               alt="profile"
@@ -33,6 +33,7 @@ export default function shop() {
               Pilih gambar
             </button>
           </div>
+          <div style={{ borderTop: "1px solid black", margin: "10px 0" }}></div>
           <form class="w-full mt-4">
             <div className="md:flex md:items-center md:justify-between mb-6">
               <div className="md:w-4/12">
