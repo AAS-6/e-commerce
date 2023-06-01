@@ -11,25 +11,26 @@ datasource db {
 }
 
 model users {
-  id         String      @id @db.Uuid
-  email      String      @unique
-  firstName  String?
-  lastName   String?
-  phone      String?
-  createdAt  DateTime    @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
-  updatedAt  DateTime    @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @db.Timestamptz(6)
-  addressId  String?
-  ratingId   String?
-  avatar_url String?
-  gender     Gender?
-  birthDate  DateTime?   @db.Timestamptz(6)
-  cart       cart[]
-  merchant   merchant[]
-  orders     orders[]
-  reviews    reviews[]
-  users      auth_users  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  whishlist  whishlist[]
-  address    address[]   @relation("AddressToUser")
+  id                               String      @id @db.Uuid
+  email                            String      @unique
+  firstName                        String?
+  lastName                         String?
+  phone                            String?
+  createdAt                        DateTime    @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  updatedAt                        DateTime    @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @db.Timestamptz(6)
+  addressId                        String?
+  ratingId                         String?
+  avatar_url                       String?
+  gender                           Gender?
+  birthDate                        DateTime?   @db.Timestamptz(6)
+  cart                             cart[]
+  merchant                         merchant[]
+  orders                           orders[]
+  reviews                          reviews[]
+  address_users_addressIdToaddress address?    @relation("users_addressIdToaddress", fields: [addressId], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  users                            auth_users  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  whishlist                        whishlist[]
+  address                          address[]   @relation("AddressToUser")
 
   @@schema("public")
 }
@@ -51,7 +52,7 @@ model merchant {
 }
 
 model address {
-  id                                         String     @id(map: "Address_pkey")
+  id                                         String     @id(map: "Address_pkey") @default(dbgenerated("gen_random_uuid()"))
   jalan                                      String?
   rt                                         String?
   rw                                         String?
@@ -70,15 +71,16 @@ model address {
   orders                                     orders[]
   shipping_shipping_addressIdToaddress       shipping[] @relation("shipping_addressIdToaddress")
   shipping_shipping_originAddressIdToaddress shipping[] @relation("shipping_originAddressIdToaddress")
+  users_users_addressIdToaddress             users[]    @relation("users_addressIdToaddress")
   User                                       users[]    @relation("AddressToUser")
 
   @@schema("public")
 }
 
 model cart {
-  id        String   @id(map: "Cart_pkey")
+  id        String   @id(map: "Cart_pkey") @default(dbgenerated("gen_random_uuid()"))
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @default(now())
   userId    String   @db.Uuid
   productId String
   quantity  Int
@@ -89,23 +91,21 @@ model cart {
 }
 
 model product {
-  id                                 String      @id(map: "Product_pkey") @default(dbgenerated("gen_random_uuid()"))
-  name                               String
-  createdAt                          DateTime    @default(now())
-  updatedAt                          DateTime
-  merchantId                         String
-  imageUrls                          String[]
-  detail                             String
-  reviewId                           String?
-  category                           Category
-  variantId                          String?
-  cart                               cart[]
-  orders                             orders[]
-  merchant                           merchant    @relation(fields: [merchantId], references: [id], onUpdate: NoAction)
-  variant_product_variantIdTovariant variant?    @relation("product_variantIdTovariant", fields: [variantId], references: [id], onDelete: Restrict, onUpdate: NoAction)
-  reviews                            reviews[]
-  variant                            variant[]
-  whishlist                          whishlist[]
+  id         String      @id(map: "Product_pkey") @default(dbgenerated("gen_random_uuid()"))
+  name       String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  merchantId String
+  imageUrls  String[]
+  detail     String
+  reviewId   String?
+  category   Category
+  cart       cart[]
+  orders     orders[]
+  merchant   merchant    @relation(fields: [merchantId], references: [id], onUpdate: NoAction)
+  reviews    reviews[]
+  variant    variant[]
+  whishlist  whishlist[]
 
   @@schema("public")
 }
@@ -131,15 +131,15 @@ model shipping {
 }
 
 model variant {
-  id                                 String    @id(map: "Variant_pkey")
-  createdAt                          DateTime  @default(now())
-  updatedAt                          DateTime
-  productId                          String
-  name                               String
-  price                              Int
-  stock                              Int
-  product_product_variantIdTovariant product[] @relation("product_variantIdTovariant")
-  product                            product   @relation(fields: [productId], references: [id], onUpdate: NoAction)
+  id        String   @id(map: "Variant_pkey") @default(dbgenerated("gen_random_uuid()"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  productId String
+  name      String?  @default("DEFAULT")
+  price     Int
+  stock     Int
+  weight    Float    @db.Real
+  product   product  @relation(fields: [productId], references: [id], onUpdate: NoAction)
 
   @@schema("public")
 }
