@@ -20,6 +20,7 @@ export default function Pulsa() {
     onSubmit: values => {
       console.log(values);
       alert(JSON.stringify(values, null, 2));
+      // postMessage(values)
     },
     validationSchema: PhoneSchema,
   });
