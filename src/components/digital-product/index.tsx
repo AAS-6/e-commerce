@@ -5,9 +5,12 @@ import Topup from "./Topup";
 
 export default function Wrapper() {
   return (
-    <section className='flex w-[98%] max-w-[1440px] bg-white border-2 gap-x-2 rounded-lg p-4 mb-10 mt-12 bg-whites'>
-      <SpecialCategory />
-      <Topup />
+    <section className='flex flex-col w-[98%] max-w-[1440px] bg-white border-2 gap-x-2 rounded-lg p-4 mb-10 mt-12 bg-whites'>
+      <div className="flex h-full">        
+        <SpecialCategory />
+        <Topup />
+      </div>
+      <CategoryList />
     </section>
   );
 }
