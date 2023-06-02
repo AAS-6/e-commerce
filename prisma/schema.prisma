@@ -58,7 +58,7 @@ model address {
   rw                                         String?
   kodePos                                    String
   createdAt                                  DateTime   @default(now())
-  updatedAt                                  DateTime
+  updatedAt                                  DateTime   @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
   districtId                                 Int
   provinceId                                 Int
   regencyId                                  Int
@@ -111,9 +111,9 @@ model product {
 }
 
 model shipping {
-  id                                        String   @id(map: "Shipping_pkey")
+  id                                        String   @id(map: "Shipping_pkey") @default(dbgenerated("gen_random_uuid()"))
   createdAt                                 DateTime @default(now())
-  updatedAt                                 DateTime
+  updatedAt                                 DateTime @default(now())
   orderId                                   String
   status                                    String
   courier                                   String
