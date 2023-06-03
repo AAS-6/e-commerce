@@ -22,5 +22,5 @@ Membuat aplikasi *e-commerce* dengan mengimplementasikan:
 2. Anggit Ihsananto
 3. Faiz Unisa Jazadi
 4. Josiah Farrel Suwito
-5. Rhazes Wahyu Setiawan
+5. Rhazes Wahyu Ramadhan Setiawan
 6. Ronggo Tsani Musyafa
