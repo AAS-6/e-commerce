@@ -1,20 +1,30 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-/*
-const OrderCard = ({ price, name, quantity, img }) => {
+const OrderCard = ({
+  price,
+  name,
+  quantity,
+  img,
+}: {
+  price: number;
+  name: string;
+  quantity: number;
+  img: string;
+}) => {
   const dispatch = useDispatch();
   const formatter = Intl.NumberFormat("id-ID", {
     currency: "IDR",
     style: "currency",
   });
+
   const addHandler = () => {
-    dispatch(addItem({ name, price }));
-    dispatch(saveItem({ name, quantity: quantity + 1, price }));
+    // dispatch(addItem({ name, price }));
+    // dispatch(saveItem({ name, quantity: quantity + 1, price }));
   };
   const removeHandler = () => {
-    dispatch(removeItem({ name, price }));
-    dispatch(saveItem({ name, quantity: quantity - 1, price }));
+    // dispatch(removeItem({ name, price }));
+    // dispatch(saveItem({ name, quantity: quantity - 1, price }));
   };
 
   return (
@@ -46,4 +56,3 @@ const OrderCard = ({ price, name, quantity, img }) => {
 };
 
 export default OrderCard;
-*/

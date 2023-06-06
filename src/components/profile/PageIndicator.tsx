@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function MyComponent() {
   const [isActive, setIsActive] = useState(false);
 
-  const handleClick = (id) => {
+  const handleClick = (id: any) => {
     setIsActive(!isActive);
   };
 
