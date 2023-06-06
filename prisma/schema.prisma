@@ -80,7 +80,7 @@ model address {
 model cart {
   id        String   @id(map: "Cart_pkey") @default(dbgenerated("gen_random_uuid()"))
   createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  updatedAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
   userId    String   @db.Uuid
   productId String
   quantity  Int

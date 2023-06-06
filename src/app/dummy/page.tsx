@@ -7,7 +7,6 @@ export default function Wrapper() {
   return (
     <main>
       <BreadCrumb />
-      <CartList />
     </main>
   );
 }

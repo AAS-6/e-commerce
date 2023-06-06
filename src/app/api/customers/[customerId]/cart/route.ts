@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { CartParams } from "../context";
+import { log } from "console";
 
 export async function GET(_: Request, context: { params: CartParams }) {
   const { customerId } = context.params;
@@ -29,6 +30,8 @@ export async function GET(_: Request, context: { params: CartParams }) {
 export async function POST(request: Request, context: { params: CartParams }) {
   const { customerId } = context.params;
   const { productId, quantity } = await request.json();
+  console.log(productId, quantity);
+
   const result = await prisma.cart.create({
     data: {
       userId: customerId,
