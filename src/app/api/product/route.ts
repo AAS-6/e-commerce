@@ -21,6 +21,7 @@ export async function GET(request: Request) {
         name: true,
         detail: true,
         variant: true,
+        imageUrls: true,
       },
       where: {
         id: searchParams.get("id") || undefined,
@@ -39,6 +40,7 @@ export async function GET(request: Request) {
         name: true,
         detail: true,
         variant: true,
+        imageUrls: true,
       },
     });
 

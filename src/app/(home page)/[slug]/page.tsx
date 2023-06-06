@@ -44,20 +44,23 @@ export default function ProductDetail({ params }: any) {
   }, [params.slug]);
 
   return (
-    <main className='flex'>
-      <Image
-        src='/digital-product/picture-large.svg'
+    <main className="flex">
+      <img
+        src={product?.imageUrls[0]}
         width={1920}
         height={1080}
         alt={"picture-large"}
-        className='w-1/3'
+        className="w-1/3"
       />
-      <div>
-        <h1>{product?.name}</h1>
-        <p>{format(product?.variant[0].price)}</p>
+      <div className="p-10">
+        <h1 className="font-bold text-[2rem]">{product?.name}</h1>
+        <div className="border-y-2 my-5 py-4">
+          <p className="text-[2em] font-medium text-[#5F72FF]">{format(product?.variant[0].price)}</p>
+        </div>
+        <p className="mb-3">{product?.detail}</p>
         <button
           onClick={handleAddToCart}
-          className='bg-[#5F72FF] text-white p-1 rounded-md'
+          className="bg-[#5F72FF] text-[16px] font-medium text-white p-3 rounded-md"
         >
           Add to cart
         </button>

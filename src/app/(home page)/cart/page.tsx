@@ -56,6 +56,7 @@ export default function Cart() {
   }, [userId]);
 
   useEffect(() => {
+
     const getAddress = async () => {
       const address = await fetch(`/api/customers/${userId}/address`);
       const addressJson = await address.json();
