@@ -1,7 +1,7 @@
-import Image from "next/image";
-import React, { forwardRef } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 
+/*
 const OrderCard = ({ price, name, quantity, img }) => {
   const dispatch = useDispatch();
   const formatter = Intl.NumberFormat("id-ID", {
@@ -46,3 +46,4 @@ const OrderCard = ({ price, name, quantity, img }) => {
 };
 
 export default OrderCard;
+*/

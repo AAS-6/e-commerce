@@ -1,6 +1,5 @@
-import React, { use } from "react";
+import React from "react";
 import Link from "next/link";
-import Search from "@/components/layout/Search";
 import Image from "next/image";
 import Dropdown from "@/components/date/dropdown";
 import Address from "@/components/address/Address";
@@ -35,12 +34,12 @@ export default function shop() {
             </button>
           </div>
           <div style={{ borderTop: "1px solid black", margin: "10px 0" }}></div>
-          <form class="w-full mt-4">
+          <form className="w-full mt-4">
             <div className="md:flex md:items-center md:justify-between mb-6">
               <div className="md:w-4/12">
                 <label
                   className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                  for="inline-first-name"
+                  htmlFor="inline-first-name"
                 >
                   Nama Depan
                 </label>
@@ -58,7 +57,7 @@ export default function shop() {
               <div className="md:w-4/12">
                 <label
                   className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                  for="inline-last-name"
+                  htmlFor="inline-last-name"
                 >
                   Nama Belakang
                 </label>
@@ -76,7 +75,7 @@ export default function shop() {
               <div className="md:w-4/12">
                 <label
                   className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                  for="inline-password"
+                  htmlFor="inline-password"
                 >
                   Password
                 </label>
@@ -94,13 +93,13 @@ export default function shop() {
               <div className="md:w-3/12">
                 <label
                   className="block text-gray-500 font-bold md:text-right my-3 md:mb-0 pr-4 "
-                  for="inline-password"
+                  htmlFor="inline-password"
                 >
                   Alamat
                 </label>
               </div>
               <div className="flex-col space-y-4 md:w-9/12">
-                <Address className="flex"></Address>
+                <Address />
                 <input
                   className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]"
                   id="detail-address"
@@ -145,13 +144,13 @@ export default function shop() {
               <div className="md:w-3/12">
                 <label
                   className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                  for="inline-password"
+                  htmlFor="inline-password"
                 >
                   Tanggal Lahir
                 </label>
               </div>
               <div className="flex-col space-y-4 md:w-9/12">
-                <Dropdown className="flex"></Dropdown>
+                <Dropdown />
               </div>
             </div>
             <div className="md:flex md:items-center mb-4">

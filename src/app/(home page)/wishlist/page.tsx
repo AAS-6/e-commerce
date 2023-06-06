@@ -1,9 +1,6 @@
-import React, { use } from "react";
-import Link from "next/link";
+import React from "react";
 import Image from "next/image";
 import PageIndicator from "@/components/profile/PageIndicator";
-import ProductCard from "@/components/homepage/ProductCard";
-import ProductList from "@/components/homepage/ProductList";
 
 export default function profile() {
   return (

@@ -2,7 +2,7 @@
 import { supabase } from "@/lib/supabase";
 import { setPage } from "@/store/ui-slice";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Cart() {

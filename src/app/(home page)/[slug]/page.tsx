@@ -1,8 +1,6 @@
 "use client";
 
-import { prisma } from "@/lib/prisma";
 import { useEffect, useState } from "react";
-import { product } from "@prisma/client";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
 

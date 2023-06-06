@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import OrderCard from "@/components/cart/OrderCard";
 
 export default function CartList() {
   return (
@@ -41,8 +40,13 @@ export default function CartList() {
                 <h1 className="font-medium"> 1000</h1>
               </div>
             </div>
-
-            <OrderCard />
+            {/* 
+            <OrderCard
+              price={1500000}
+              name={"Xiaomi Redmi S2"}
+              quantity={10}
+              img={"todo"}
+            /> */}
             <div className="md:flexmd:items-center mb-4 space-y-2">
               <button
                 className="shadow bg-[#2DCEA6]  focus:shadow-outline focus:outline-none text-white font-medium py-2 px-4 rounded w-full"
