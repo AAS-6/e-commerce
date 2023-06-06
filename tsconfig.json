@@ -24,6 +24,13 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/generator/populate.js"],
+  "include": [
+    "next-env.d.ts",
+    "midtrans-client.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/generator/populate.js"
+  ],
   "exclude": ["node_modules"]
 }
