@@ -1,9 +1,8 @@
-import ProductPage from "../../components/product-page";
+// import ProductPage from "../../components/product-page";
 
 export default function Wrapper() {
   return (
     <>
-      <ProductPage />
     </>
   );
 }

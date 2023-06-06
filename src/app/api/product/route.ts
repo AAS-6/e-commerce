@@ -10,16 +10,40 @@ export interface ProductType {
 }
 
 export async function GET(request: Request) {
-  const product = await prisma.product.findMany({
-    select: {
-      id: true,
-      name: true,
-      detail: true,
-      variant: true,
-    },
-  });
+  console.log("GET /api/product");
+  const { searchParams } = new URL(request.url);
+  console.log(searchParams);
 
-  return NextResponse.json({
-    product,
-  });
+  if (searchParams.get("id")) {
+    const product = await prisma.product.findUnique({
+      select: {
+        id: true,
+        name: true,
+        detail: true,
+        variant: true,
+      },
+      where: {
+        id: searchParams.get("id") || undefined,
+      },
+    });
+
+    console.log(searchParams.get("id"));
+
+    return NextResponse.json({
+      product,
+    });
+  } else {
+    const product = await prisma.product.findMany({
+      select: {
+        id: true,
+        name: true,
+        detail: true,
+        variant: true,
+      },
+    });
+
+    return NextResponse.json({
+      product,
+    });
+  }
 }
