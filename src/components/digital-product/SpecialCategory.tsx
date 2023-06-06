@@ -21,9 +21,9 @@ const specialCategory = [
 
 export default function SpecialCategory() {
   return (
-    <div className='basis-1/2 flex flex-col'>
-      <h2 className='text-lg font-medium'>Kategori Pilihan</h2>
-      <div className='flex gap-x-3 xl:gap-x-5 mt-2'>
+    <div className='basis-1/2 flex flex-col '>
+      <h2 className='text-lg font-semibold'>Kategori Pilihan</h2>
+      <div className='flex gap-x-3 xl:gap-x-5 mt-2 h-full'>
         {specialCategory.map(item => (
           <div
             key={item.name}

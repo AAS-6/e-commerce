@@ -46,18 +46,18 @@ const category = [
 
 export default function CategoryList() {
     return (
-        <div className="flex items-center justify-center mr-3">
+        <div className="flex items-center justify-center mx-3 mt-2">
             {category.map((item: any) => (
-                <div className="py-[9px] px-3 flex border-2 rounded-xl mx-1  items-center" key={item.name}>
-                    <Image
-                        width={60}
-                        height={60}
-                        src={item.img}
-                        className="w-5/6 mr-[10px]"
-                        alt={item.name}
-                    />
-                    <p>{item.name}</p>
-                </div>
+                <Link href={"#"} className="py-[9px] px-4 flex border-2 rounded-xl mx-1 items-center" key={item.name}>
+                  <Image
+                      width={70}
+                      height={70}
+                      src={item.img}
+                      className="w-1/3 mr-[8px]"
+                      alt={item.name}
+                  />
+                  <p className="text-lg">{item.name}</p>
+                </Link>
             ))}
         </div>
     )
