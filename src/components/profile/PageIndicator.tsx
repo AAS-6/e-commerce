@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function MyComponent() {
   const [isActive, setIsActive] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = (id) => {
     setIsActive(!isActive);
   };
 
@@ -13,6 +13,7 @@ export default function MyComponent() {
       <div className="flex-col space-y-4">
         <div className="flex space-x-3">
           <Image
+            id="profile"
             src="/profile/profile_page.svg" // Replace with the actual path to your image
             alt="Clickable Image"
             style={{

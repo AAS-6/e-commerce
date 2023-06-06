@@ -3,6 +3,7 @@ import Link from "next/link";
 import Search from "@/components/layout/Search";
 import Image from "next/image";
 import Dropdown from "@/components/date/dropdown";
+import Address from "@/components/address/Address";
 
 export default function shop() {
   return (
@@ -99,7 +100,7 @@ export default function shop() {
                 </label>
               </div>
               <div className="flex-col space-y-4 md:w-9/12">
-                <Dropdown className="flex"></Dropdown>
+                <Address className="flex"></Address>
                 <input
                   className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]"
                   id="detail-address"
