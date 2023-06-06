@@ -1,4 +1,9 @@
 "use client";
+import CartList from "@/components/cart/CartList";
+import Image from "next/image";
+// import Address from "@components/address/Address";
+// import Dropdown from "@components/cart/Dropdown";
+import Link from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { setPage } from "@/store/ui-slice";
 import { useRouter } from "next/navigation";
@@ -108,37 +113,81 @@ export default function Cart() {
   }, [page]);
 
   return (
-    <main>
-      <h1>{title}</h1>
+    <main className="space-y-8">
+      {/* <h1>{title}</h1> */}
       {page === "CART" && (
         <ul>
-          {product &&
-            product?.map((item: any) => (
-              <li key={item.id}>
-                <h1>{item.product.name}</h1>
-                <p>{format(item.product.variant[0].price)}</p>
-              </li>
-            ))}
+          <CartList product={product} />
         </ul>
       )}
       {page === "SHIPPING" && (
         <form>
-          <div>
-            <div>{firstName}</div>
-            <div>{lastName}</div>
-          </div>
-          <div>{address.jalan}</div>
+          <div className="max-w-2xl mx-auto gap-y-5 justify-center shadow-2xl rounded-2xl">
+            <div className="p-9">
+              <form className="w-full mt-4">
+                <div className="md:flex md:items-center md:justify-between mb-6">
+                  <div className="md:w-4/12">
+                    <label
+                      className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                      htmlFor="inline-first-name"
+                    >
+                      Nama Depan
+                    </label>
+                  </div>
+                  <div className="md:w-full">
+                    <h1 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]">
+                      {address?.firstName}
+                    </h1>
+                  </div>
+                </div>
+                <div className="md:flex md:items-center md:justify-between mb-6 w-full">
+                  <div className="md:w-4/12">
+                    <label
+                      className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
+                      htmlFor="inline-last-name"
+                    >
+                      Nama Belakang
+                    </label>
+                  </div>
+                  <div className="md:w-full">
+                    <h1 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]">
+                      {address?.lastName}
+                    </h1>
+                  </div>
+                </div>
 
-          <div>
-            <div>{address.Regency.name}</div>
-            <div>{address.Province.name}</div>
+                <div className="md:flex md:items-top mb-6">
+                  <div className="md:w-3/12">
+                    <label
+                      className="block text-gray-500 font-bold md:text-right my-3 md:mb-0 pr-4 "
+                      htmlFor="inline-password"
+                    >
+                      Alamat
+                    </label>
+                  </div>
+                  <div className="flex-col space-y-4 md:w-9/12">
+                    {/* <Address /> */}
+                    <h1 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]">
+                      {address.jalan} , {address.Regency.name} ,
+                      {address.Province.name}
+                    </h1>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </form>
       )}
       {page === "PAYMENT" && <div></div>}
-      <button onClick={handleNext}>
-        {page === "CART" ? "Next" : page === "SHIPPING" ? "Next" : "Finish"}
-      </button>
+      <div className="md:flex md:items-center mb-4">
+        <button
+          onClick={handleNext}
+          className="shadow bg-[#5F72FF]  focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full mx-[90px]"
+          type="button"
+        >
+          {page === "CART" ? "Next" : page === "SHIPPING" ? "Next" : "Finish"}
+        </button>
+      </div>
     </main>
   );
 }

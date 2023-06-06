@@ -13,7 +13,7 @@ const OrderCard = ({
   img: string;
 }) => {
   const dispatch = useDispatch();
-  const formatter = Intl.NumberFormat("id-ID", {
+  const { format } = Intl.NumberFormat("id-ID", {
     currency: "IDR",
     style: "currency",
   });
@@ -28,10 +28,10 @@ const OrderCard = ({
   };
 
   return (
-    <div className="grid grid-cols-4 rounded-md my-5 w-3/5 py-2">
+    <div className="grid grid-cols-4 rounded-md my-5 w-8/12 py-2">
       <div className="col-span-3 flex flex-col ml-10 justify-center h-20">
         <div className="flex gap-5 items-center ">
-          <h1 className="font-medium">Rp 23.000,-</h1>
+          <h1 className="font-medium">{format(price)}-</h1>
 
           <div className="flex rounded-md overflow-hidden bg-mangoTango text-black border-2 font-medium">
             <div
@@ -48,7 +48,7 @@ const OrderCard = ({
               +
             </div>
           </div>
-          <h1 className="font-medium text-[#5F72FF]">Rp 46.000,-</h1>
+          <h1 className="font-medium text-[#5F72FF]">{format(price)},-</h1>
         </div>
       </div>
     </div>
