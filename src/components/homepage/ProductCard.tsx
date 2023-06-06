@@ -34,8 +34,9 @@ export default function ProductCard({
           <Image
             // src='/digital-product/picture-large.svg'
             src={image}
-            width={60}
-            height={60}
+            width={180}
+            height={180}
+            objectFit = "contain"
             alt="Handphone"
           />
         </div>
