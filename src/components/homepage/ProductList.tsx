@@ -19,7 +19,7 @@ export default function ProductList() {
   return (
     <>
       <div className="grid grid-cols-6  gap-3 max-w-[1440px] justify-center">
-        {products?.map((product: ProductType) => (
+        {products?.map((product: any) => (
           <ProductCard
             key={product.id}
             title={product.name}

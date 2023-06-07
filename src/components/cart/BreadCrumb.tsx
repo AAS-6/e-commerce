@@ -37,6 +37,7 @@
 import React from "react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
+import { setPage } from "@/store/ui-slice";
 // import { setPage } from "@/store/uiSlice";
 
 type BreadCrumbProps = {
@@ -47,13 +48,13 @@ export default function BreadCrumb({ page }: BreadCrumbProps) {
   const dispatch = useDispatch();
 
   const handleClick = (selectedPage: string) => {
-    dispatch(setPage(selectedPage));
+    dispatch(setPage(selectedPage as "CART" | "SHIPPING" | "PAYMENT"));
   };
 
   return (
-    <div className="flex justify-center mx-32">
-      <div className="flex-col my-24">
-        <div className="flex justify-evenly items-center max-w-full">
+    <div className='flex justify-center mx-32'>
+      <div className='flex-col my-24'>
+        <div className='flex justify-evenly items-center max-w-full'>
           <div
             className={`text-4xl ${
               page === "CART"
@@ -65,10 +66,10 @@ export default function BreadCrumb({ page }: BreadCrumbProps) {
             <h1>Shopping Cart</h1>
           </div>
           <Image
-            src="../cart/chevron-left.svg"
+            src='../cart/chevron-left.svg'
             width={50}
             height={50}
-            alt="chevron-left"
+            alt='chevron-left'
           />
           <div
             className={`text-4xl ${
@@ -81,10 +82,10 @@ export default function BreadCrumb({ page }: BreadCrumbProps) {
             <h1>Shipping Detail</h1>
           </div>
           <Image
-            src="../cart/chevron-left.svg"
+            src='../cart/chevron-left.svg'
             width={50}
             height={50}
-            alt="chevron-left"
+            alt='chevron-left'
           />
           <div
             className={`text-4xl ${

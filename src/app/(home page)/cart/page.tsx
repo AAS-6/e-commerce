@@ -110,7 +110,7 @@ export default function Cart() {
     if (page === "PAYMENT") {
       getPayment();
     }
-  }, [page]);
+  }, [page, product, userId, router]);
 
   return (
     <main className="space-y-8">

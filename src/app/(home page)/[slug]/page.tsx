@@ -45,7 +45,7 @@ export default function ProductDetail({ params }: any) {
 
   return (
     <main className="flex">
-      <img
+      <Image
         src={product?.imageUrls[0]}
         width={1920}
         height={1080}
