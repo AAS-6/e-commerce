@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(request: Request, context: { params: any }) {
+export async function GET(_: Request, context: { params: any }) {
   const { customerId } = context.params;
   const { addressId, firstName, lastName } = (await prisma.users.findUnique({
     where: {
@@ -13,6 +13,8 @@ export async function GET(request: Request, context: { params: any }) {
       lastName: true,
     },
   })) as { addressId: string; firstName: string; lastName: string };
+
+  console.log('addressId', addressId)
 
   const result = await prisma.address.findUnique({
     where: {

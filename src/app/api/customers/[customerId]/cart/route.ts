@@ -39,8 +39,9 @@ export async function POST(request: Request, context: { params: CartParams }) {
       quantity,
     },
   });
+
   return NextResponse.json({
     customerId,
-    item: result,
+    result,
   });
 }
