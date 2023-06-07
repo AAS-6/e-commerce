@@ -61,7 +61,6 @@ export default function Cart() {
   }, [userId]);
 
   useEffect(() => {
-
     const getAddress = async () => {
       const address = await fetch(`/api/customers/${userId}/address`);
       const addressJson = await address.json();
@@ -69,6 +68,8 @@ export default function Cart() {
 
       const firstName = addressJson.firstName;
       const lastName = addressJson.lastName;
+
+      console.log("addressJSON", addressJson);
 
       setFirstName(firstName);
 
@@ -113,7 +114,7 @@ export default function Cart() {
   }, [page, product, userId, router]);
 
   return (
-    <main className="space-y-8">
+    <main className='space-y-8'>
       {/* <h1>{title}</h1> */}
       {page === "CART" && (
         <ul>
@@ -122,52 +123,52 @@ export default function Cart() {
       )}
       {page === "SHIPPING" && (
         <form>
-          <div className="max-w-2xl mx-auto gap-y-5 justify-center shadow-2xl rounded-2xl">
-            <div className="p-9">
-              <form className="w-full mt-4">
-                <div className="md:flex md:items-center md:justify-between mb-6">
-                  <div className="md:w-4/12">
+          <div className='max-w-2xl mx-auto gap-y-5 justify-center shadow-2xl rounded-2xl'>
+            <div className='p-9'>
+              <form className='w-full mt-4'>
+                <div className='md:flex md:items-center md:justify-between mb-6'>
+                  <div className='md:w-4/12'>
                     <label
-                      className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                      htmlFor="inline-first-name"
+                      className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4'
+                      htmlFor='inline-first-name'
                     >
-                      Nama Depan
+                      Nama Depan 
                     </label>
                   </div>
-                  <div className="md:w-full">
-                    <h1 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]">
-                      {address?.firstName}
+                  <div className='md:w-full'>
+                    <h1 className='appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]'>
+                      {firstName}
                     </h1>
                   </div>
                 </div>
-                <div className="md:flex md:items-center md:justify-between mb-6 w-full">
-                  <div className="md:w-4/12">
+                <div className='md:flex md:items-center md:justify-between mb-6 w-full'>
+                  <div className='md:w-4/12'>
                     <label
-                      className="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4"
-                      htmlFor="inline-last-name"
+                      className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4'
+                      htmlFor='inline-last-name'
                     >
-                      Nama Belakang
+                      Last Name
                     </label>
                   </div>
-                  <div className="md:w-full">
-                    <h1 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]">
-                      {address?.lastName}
+                  <div className='md:w-full'>
+                    <h1 className='appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]'>
+                      {lastName}
                     </h1>
                   </div>
                 </div>
 
-                <div className="md:flex md:items-top mb-6">
-                  <div className="md:w-3/12">
+                <div className='md:flex md:items-top mb-6'>
+                  <div className='md:w-3/12'>
                     <label
-                      className="block text-gray-500 font-bold md:text-right my-3 md:mb-0 pr-4 "
-                      htmlFor="inline-password"
+                      className='block text-gray-500 font-bold md:text-right my-3 md:mb-0 pr-4 '
+                      htmlFor='inline-password'
                     >
                       Alamat
                     </label>
                   </div>
-                  <div className="flex-col space-y-4 md:w-9/12">
+                  <div className='flex-col space-y-4 md:w-9/12'>
                     {/* <Address /> */}
-                    <h1 className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]">
+                    <h1 className='appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]'>
                       {address.jalan} , {address.Regency.name} ,
                       {address.Province.name}
                     </h1>
@@ -179,11 +180,11 @@ export default function Cart() {
         </form>
       )}
       {page === "PAYMENT" && <div></div>}
-      <div className="md:flex md:items-center mb-4">
+      <div className='md:flex md:items-center mb-4'>
         <button
           onClick={handleNext}
-          className="shadow bg-[#5F72FF]  focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full mx-[90px]"
-          type="button"
+          className='shadow bg-[#5F72FF]  focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded w-full mx-[90px]'
+          type='button'
         >
           {page === "CART" ? "Next" : page === "SHIPPING" ? "Next" : "Finish"}
         </button>
