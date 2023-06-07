@@ -56,19 +56,19 @@ export default function CartList({ product }: CartListProps) {
                   img={item.product.image}
                 />
                 <div className="md:flexmd:items-center mb-4 space-y-2">
-                  <button
-                    className="shadow bg-[#2DCEA6]  focus:shadow-outline focus:outline-none text-white font-medium py-2 px-4 rounded w-full"
-                    type="button"
-                  >
-                    Wishlist
-                  </button>
-                  <button
-                    className="shadow bg-[#C03221]  focus:shadow-outline focus:outline-none text-white font-medium py-2 px-4 rounded w-full"
-                    type="button"
-                  >
-                    Hapus
-                  </button>
-                </div>
+              <button
+                className="shadow hover:bg-[#2DCEA6] hover:text-white focus:bg-white border border-[#2DCEA6] focus:text-black font-medium py-2 px-4 rounded w-full"
+                type="button"
+              >
+                Wishlist
+              </button>
+              <button
+                className="shadow hover:bg-[#C03221] hover:text-white focus:bg-white border border-[#C03221] bg-white text-black focus:shadow-outline focus:outline-none font-medium py-2 px-4 rounded w-full"
+                type="button"
+              >
+                Hapus
+              </button>
+            </div>
               </div>
             </div>
           </div>
