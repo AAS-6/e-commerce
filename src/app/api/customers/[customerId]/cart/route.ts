@@ -44,7 +44,7 @@ export async function POST(request: Request, context: { params: CartParams }) {
 
   return NextResponse.json({
     customerId,
-    item: result,
+    result,
   });
 }
 
