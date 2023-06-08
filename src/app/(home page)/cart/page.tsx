@@ -52,7 +52,7 @@ export default function Cart() {
       const productJson = await product.json();
 
       setProduct(productJson.items);
-      console.log(productJson);
+      console.log("PRODUCT JSON", productJson);
     };
 
     if (userId) {
