@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase";
 import { useEffect, useState } from "react";
 import { selectUserId } from "@/store/auth-slice";
 import { selectCart } from "@/store/cart-slice";
+import Link from "next/link";
 
 export default function CartOverlay() {
   const cartOverlay = useSelector(selectCartOverlay);
@@ -32,7 +33,7 @@ export default function CartOverlay() {
           }}
           onClick={handleCartOverlay}
         ></div>
-        <div className='bg-white z-[70] relative w-1/2 max-w-5xl'>
+        <div className='bg-white z-[70] relative w-1/2 max-w-3xl py-14'>
           <button className="absolute top-1 right-1">
             <Image
               src='/cart/close.svg'
@@ -42,17 +43,17 @@ export default function CartOverlay() {
               onClick={handleCartOverlay}
             />
           </button>
-          <div className='flex gap-x-6 items-center'>
+          <div className='flex gap-x-6 items-center justify-center pb-12'>
             <Image
               src='/cart/success.svg'
               width={32}
               height={32}
               alt='Success'
             />
-            <h1>Produk berhasil ditambahkan ke dalam keranjang</h1>
+            <h1 className="text-[#2DCEA6] text-2xl font-semibold">Produk berhasil ditambahkan ke dalam keranjang</h1>
           </div>
 
-          <div className='flex gap-x-6'>
+          <div className='flex gap-x-6 pb-12 px-28'>
             <Image
               src={cartItem.image}
               width={160}
@@ -66,6 +67,10 @@ export default function CartOverlay() {
               <p>Kuantitas: {cartItem.quantity}</p>
               <p>Total Harga: {format(cartItem.price)}</p>
             </div>
+          </div>
+          <div className="flex justify-center">
+            <button className="basis-1/3 border-2 rounded-lg border-red-500  text-red-500">Batalkan Pesanan</button>
+            <Link href="/cart" className="ml-10 bg-[#5F72FF] py-2 basis-1/3 text-center rounded-lg text-white">Lihat Keranjang</Link>
           </div>
         </div>
       </div>

@@ -246,6 +246,7 @@ model flow_state {
 
   @@index([auth_code], map: "idx_auth_code")
   @@index([user_id, authentication_method], map: "idx_user_id_auth_method")
+  @@index([created_at(sort: Desc)])
   @@schema("auth")
 }
 
@@ -337,6 +338,7 @@ model refresh_tokens {
   @@index([instance_id, user_id])
   @@index([parent])
   @@index([session_id, revoked])
+  @@index([updated_at(sort: Desc)])
   @@schema("auth")
 }
 
@@ -372,6 +374,7 @@ model saml_relay_states {
 
   @@index([for_email])
   @@index([sso_provider_id])
+  @@index([created_at(sort: Desc)])
   @@schema("auth")
 }
 
@@ -397,6 +400,7 @@ model sessions {
 
   @@index([user_id])
   @@index([user_id, created_at], map: "user_id_created_at_idx")
+  @@index([not_after(sort: Desc)])
   @@schema("auth")
 }
 

@@ -44,6 +44,8 @@ export async function POST(request: Request, context: { params: CartParams }) {
     where: {
       userId: customerId,
       productId,
+      quantity,
+      
     },
   });
 
