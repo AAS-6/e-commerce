@@ -24,7 +24,7 @@ export default function ProductList() {
 
   return (
     <>
-      <div className='grid grid-cols-6  gap-3 max-w-[1440px] justify-center'>
+      <div className="grid grid-cols-6  gap-3 max-w-[1440px] justify-center">
         {/* @ts-ignore */}
         {data?.map((product: any) => (
           <ProductCard
