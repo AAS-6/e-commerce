@@ -9,103 +9,39 @@ type CartListProps = {
 };
 
 export default function CartList() {
-  const [userId, setUserId] = useState<string>();
-
   const { data: cart, error } = useQuery({
-    queryKey: ["cart", userId],
+    queryKey: ["cart"],
     queryFn: async () => {
+      const session = await supabase.auth.getSession();
+      const userId = session?.data.session?.user.id;
       const res = await fetch(`/api/customers/${userId}/cart`);
+
       const data = await res.json();
 
       return data;
     },
   });
 
-  useEffect(() => {
-    const getId = async () => {
-      const id = (await supabase.auth.getSession()).data.session?.user.id;
-      setUserId(id);
-    };
-
-    getId();
-  }, []);
-
-  const handleDelete = async (cartId: string) => {
-    const res = await fetch(`/api/customers/${userId}/cart?cartId=${cartId}`);
-    const data = await res.json();
-  };
+  if (error) {
+    return <p>Error</p>;
+  }
 
   return (
     <ul>
-      {/* {cart &&
-        // cart.map((item: any) => {
+      {cart &&
+        cart.items.length > 0 &&
+        cart?.items.map((item: any) => {
           return (
-            <div
-              className='bg-white py-6 px-12 border-2 mx-[90px] rounded-lg my-6'
+            <OrderCard
+              price={item.product.variant[0].price}
+              name={item.product.name}
+              quantity={item.quantity}
+              img={item.product.image}
+              id={item.id}
               key={item.id}
-            >
-              <div className='flex justify-between'>
-                <div className='flex space-x-[24px] items-center'>
-                  <Image
-                    src='/cart/list_image.svg'
-                    width={120}
-                    height={120}
-                    alt={"picture"}
-                  />
-                  <div className='flex-col w-2/6'>
-                    <h1 className='font-medium w-5/6'>{item.product.name}</h1>
-                    <div className='flex'>
-                      <h1 className='font-medium'>IKEA</h1>
-                      <h1 className='font-medium'> - </h1>
-                      <h1 className='font-medium'>Jakarta Barat</h1>
-                    </div>
-                    <div className='flex items-center space-x-2'>
-                      <Image
-                        src='../cart/star.svg'
-                        width={12}
-                        height={12}
-                        alt='star'
-                      />
-                      <h1 className='font-medium'>4.9</h1>
-                      <div
-                        style={{
-                          borderLeft: "1px solid black",
-                          margin: "48px 0",
-                        }}
-                      ></div>
-                      <h1 className='font-medium'>Terjual </h1>
-                      <h1 className='font-medium'> 1000</h1>
-                    </div>
-                  </div>
-
-                  <OrderCard
-                    price={item.product.variant[0].price}
-                    name={item.product.name}
-                    quantity={item.quantity}
-                    img={item.product.image}
-                  />
-                  <div className='md:flexmd:items-center mb-4 space-y-2'>
-                    <button
-                      className='shadow bg-[#2DCEA6]  focus:shadow-outline focus:outline-none text-white font-medium py-2 px-4 rounded w-full'
-                      type='button'
-                    >
-                      Wishlist
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleDelete(item.id);
-                      }}
-                      className='shadow bg-[#C03221]  focus:shadow-outline focus:outline-none text-white font-medium py-2 px-4 rounded w-full'
-                      type='button'
-                    >
-                      Hapus
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            />
           );
-        })} */}
+        })}
     </ul>
   );
 }
