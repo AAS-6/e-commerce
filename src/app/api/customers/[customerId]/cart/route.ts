@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { CartParams } from "../context";
-import { log } from "console";
 
 export async function GET(_: Request, context: { params: CartParams }) {
   const { customerId } = context.params;
@@ -11,20 +10,15 @@ export async function GET(_: Request, context: { params: CartParams }) {
     },
     select: {
       id: true,
-      productId: true,
+      variantId: true,
       quantity: true,
-      product: {
+      variant: {
         select: {
           id: true,
           name: true,
-          variant: {
-            select: {
-              id: true,
-              name: true,
-              price: true,
-              stock: true,
-            },
-          },
+          price: true,
+          stock: true,
+          product: true,
         },
       },
     },
@@ -38,14 +32,12 @@ export async function GET(_: Request, context: { params: CartParams }) {
 
 export async function POST(request: Request, context: { params: CartParams }) {
   const { customerId } = context.params;
-  const { productId, quantity, variantId } = await request.json();
+  const { quantity, variantId } = await request.json();
 
   const existingCartItem = await prisma.cart.findFirst({
     where: {
       userId: customerId,
-      productId,
-      quantity,
-      
+      variantId,
     },
   });
 
@@ -63,7 +55,7 @@ export async function POST(request: Request, context: { params: CartParams }) {
     result = await prisma.cart.create({
       data: {
         userId: customerId,
-        productId,
+        variantId,
         quantity,
       },
     });

@@ -4,17 +4,13 @@ import React from "react";
 import BreadCrumb from "@/components/cart/BreadCrumb";
 import { supabase } from "@/lib/supabase";
 import { Suspense, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const page = useSelector((state: any) => state.ui.page);
   const [userId, setUserId] = useState<any>();
   const [product, setProduct] = useState<any>();
-  const { format } = Intl.NumberFormat("id-ID", {
-    currency: "IDR",
-    style: "currency",
-  });
-
+  
   useEffect(() => {
     const getDetail = async () => {
       const session = await supabase.auth.getSession();
