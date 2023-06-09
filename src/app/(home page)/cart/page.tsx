@@ -1,9 +1,5 @@
 "use client";
 import CartList from "@/components/cart/CartList";
-import Image from "next/image";
-// import Address from "@components/address/Address";
-// import Dropdown from "@components/cart/Dropdown";
-import Link from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import { setPage } from "@/store/ui-slice";
 import { useRouter } from "next/navigation";
@@ -18,11 +14,6 @@ export default function Cart() {
   const [product, setProduct] = useState<any>();
   const [address, setAddress] = useState<any>();
   const router = useRouter();
-  const [redirectUrl, setRedirectUrl] = useState<any>();
-  const { format } = Intl.NumberFormat("id-ID", {
-    currency: "IDR",
-    style: "currency",
-  });
   const dispatch = useDispatch();
 
   const handleNext = () => {
@@ -45,19 +36,6 @@ export default function Cart() {
 
     getDetail();
   }, []);
-
-  useEffect(() => {
-    const getProduct = async () => {
-      const product = await fetch(`/api/customers/${userId}/cart`);
-      const productJson = await product.json();
-
-      setProduct(productJson.items);
-    };
-
-    if (userId) {
-      getProduct();
-    }
-  }, [userId]);
 
   useEffect(() => {
     const getAddress = async () => {
@@ -108,12 +86,7 @@ export default function Cart() {
 
   return (
     <main className='space-y-8'>
-      {/* <h1>{title}</h1> */}
-      {page === "CART" && (
-        <ul>
-          <CartList product={product} />
-        </ul>
-      )}
+      {page === "CART" && <CartList />}
       {page === "SHIPPING" && (
         <form>
           <div className='max-w-2xl mx-auto gap-y-5 justify-center shadow-2xl rounded-2xl'>

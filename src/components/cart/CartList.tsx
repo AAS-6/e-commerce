@@ -36,7 +36,7 @@ export default function CartList() {
   };
 
   return (
-    <div>
+    <ul>
       {/* {cart &&
         // cart.map((item: any) => {
           return (
@@ -106,6 +106,6 @@ export default function CartList() {
             </div>
           );
         })} */}
-    </div>
+    </ul>
   );
 }
