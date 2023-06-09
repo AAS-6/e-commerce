@@ -72,28 +72,3 @@ export async function POST(request: Request, context: { params: CartParams }) {
     result,
   });
 }
-
-export async function DELETE(
-  request: Request,
-  context: { params: CartParams }
-) {
-  const { searchParams } = new URL(request.url);
-  const cartId = searchParams.get("cartId");
-
-  if (!cartId) {
-    return NextResponse.json({
-      error: true,
-    });
-  }
-
-  const result = await prisma.cart.delete({
-    where: {
-      id: cartId,
-    },
-  });
-
-  return NextResponse.json({
-    success: true,
-    result,
-  });
-}
