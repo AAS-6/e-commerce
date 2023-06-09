@@ -1,6 +1,30 @@
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+export async function GET(request: NextRequest) {
+  const userId = request.nextUrl.searchParams.get("userId");
+  if (!userId) {
+    return NextResponse.json(
+      { success: false, msg: "Missing userId" },
+      { status: 400 }
+    );
+  }
+
+  const result = await prisma.orders.findMany({
+    where: {
+      userId,
+    },
+    include: {
+      order_details: true,
+    },
+  });
+
+  return NextResponse.json({
+    success: true,
+    result,
+  });
+}
+
 export async function POST(request: NextRequest) {
   const {
     userId,
