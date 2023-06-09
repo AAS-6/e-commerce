@@ -82,10 +82,10 @@ model cart {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
   userId    String   @db.Uuid
-  productId String
+  variantId String
   quantity  Int
-  product   product  @relation(fields: [productId], references: [id], onUpdate: NoAction)
   users     users    @relation(fields: [userId], references: [id], onUpdate: NoAction)
+  variant   variant  @relation(fields: [variantId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -100,7 +100,6 @@ model product {
   detail     String
   reviewId   String?
   category   Category
-  cart       cart[]
   orders     orders[]
   merchant   merchant    @relation(fields: [merchantId], references: [id], onUpdate: NoAction)
   reviews    reviews[]
@@ -139,6 +138,7 @@ model variant {
   price     Int
   stock     Int
   weight    Float    @db.Real
+  cart      cart[]
   product   product  @relation(fields: [productId], references: [id], onUpdate: NoAction)
 
   @@schema("public")
