@@ -187,7 +187,7 @@ model orders {
   status        String
   destAddressId String
   order_details order_details[]
-  address       address         @relation(fields: [destAddressId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  address       address         @relation(fields: [destAddressId], references: [id], onUpdate: NoAction)
   users         users           @relation(fields: [userId], references: [id], onUpdate: NoAction)
   shipping      shipping[]
 

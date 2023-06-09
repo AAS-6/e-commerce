@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 import midTrans from "midtrans-client";
 
 export async function POST(request: Request) {
-  const { orderId, totalAmount, userId } = await request.json();
+  const { total, userId } = await request.json();
 
   const snap = new midTrans.Snap({
     isProduction: false,
@@ -13,8 +13,8 @@ export async function POST(request: Request) {
   const transaction = await snap
     .createTransaction({
       transaction_details: {
-        order_id: orderId,
-        gross_amount: totalAmount,
+        order_id: crypto.randomUUID(),
+        gross_amount: total,
       },
       credit_card: {
         secure: true,
@@ -25,6 +25,8 @@ export async function POST(request: Request) {
     })
     .then((transaction: any) => transaction)
     .catch((error: any) => error);
+
+  console.log(transaction);
 
   return NextResponse.json({ transaction });
 }

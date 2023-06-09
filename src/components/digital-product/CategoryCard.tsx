@@ -53,8 +53,6 @@ export default function CategoryCard() {
           className="py-[9px] px-8 flex justify-center border-2 rounded-xl items-center hover:bg-[#5F72FF] hover:text-white"
           key={item.name}
           style={{ transform: "scale(1)", transition: "transform 0.3s" }}
-          onMouseEnter={(e) => (e.target.style.transform = "scale(1.1)")}
-          onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
         >
           <p className="text-base">{item.name}</p>
         </Link>
