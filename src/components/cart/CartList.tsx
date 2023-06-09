@@ -26,22 +26,26 @@ export default function CartList() {
     return <p>Error</p>;
   }
 
-  return (
-    <ul>
-      {cart &&
-        cart.items.length > 0 &&
-        cart?.items.map((item: any) => {
-          return (
-            <OrderCard
-              price={item.product.variant[0].price}
-              name={item.product.name}
-              quantity={item.quantity}
-              img={item.product.image}
-              id={item.id}
-              key={item.id}
-            />
-          );
-        })}
-    </ul>
-  );
+  console.log(cart);
+
+  return <></>
+
+  // return (
+  //   <ul>
+  //     {cart &&
+  //       cart.items.length > 0 &&
+  //       cart?.items.map((item: any) => {
+  //         return (
+  //           <OrderCard
+  //             price={item.product.variant[0].price}
+  //             name={item.product.name}
+  //             quantity={item.quantity}
+  //             img={item.product.image}
+  //             id={item.id}
+  //             key={item.id}
+  //           />
+  //         );
+  //       })}
+  //   </ul>
+  // );
 }
