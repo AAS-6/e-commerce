@@ -8,7 +8,6 @@ import Carousel from "@/components/homepage/Carousel";
 import ProductList from "@/components/homepage/ProductList";
 
 export default function Home() {
-  const dispatch = useDispatch();
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-between'>

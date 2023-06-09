@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const category = [
   {
-    name: "Handphone",
+    name: "HP",
     img: "/digital-product/picture-small.svg",
   },
   {
@@ -44,23 +44,19 @@ const category = [
   },
 ];
 
-export default function CategoryList() {
+export default function CategoryCard() {
   return (
-    <div className="flex items-center justify-center mx-4 mt-2">
+    <div className="grid grid-cols-2 gap-4">
       {category.map((item: any) => (
         <Link
           href={"#"}
-          className="py-[9px] px-5 flex border-2 rounded-xl mx-1 items-center"
+          className="py-[9px] px-8 flex justify-center border-2 rounded-xl items-center hover:bg-[#5F72FF] hover:text-white"
           key={item.name}
+          style={{ transform: "scale(1)", transition: "transform 0.3s" }}
+          onMouseEnter={(e) => (e.target.style.transform = "scale(1.1)")}
+          onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
         >
-          <Image
-            width={70}
-            height={70}
-            src={item.img}
-            className="w-1/3 mr-[8px]"
-            alt={item.name}
-          />
-          <p className="text-lg">{item.name}</p>
+          <p className="text-base">{item.name}</p>
         </Link>
       ))}
     </div>
