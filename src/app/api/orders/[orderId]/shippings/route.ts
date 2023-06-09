@@ -25,6 +25,7 @@ export async function POST(
   request: NextRequest,
   context: { params: { orderId: string } }
 ) {
+  /*
   const { orderId } = context.params;
   const { courier, service, resi, cost, etd } =
     (await request.json()) as ShippingRequestBody;
@@ -32,10 +33,7 @@ export async function POST(
   const order = await prisma.orders.findUnique({
     where: { id: orderId },
     include: {
-      product: {
-        include: {
-          merchant: true,
-        },
+      order_details: true,
       },
     },
   });
@@ -79,4 +77,6 @@ export async function POST(
   });
 
   return NextResponse.json({ result });
+ */
+  return NextResponse.json({ success: false, message: "Not implemented" });
 }
