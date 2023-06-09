@@ -10,8 +10,17 @@ export async function GET(_: Request, context: { params: CartParams }) {
     },
     select: {
       id: true,
+      variantId: true,
       quantity: true,
-      product: true,
+      variant: {
+        select: {
+          id: true,
+          name: true,
+          price: true,
+          stock: true,
+          product: true,
+        },
+      },
     },
   });
 
