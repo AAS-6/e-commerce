@@ -26,7 +26,7 @@ export async function PUT(
       id: cartId,
     },
     include: {
-      variant: true,
+      product: true,
     },
   });
 
@@ -37,7 +37,7 @@ export async function PUT(
     );
   }
 
-  if (quantity > cartItem.variant.stock) {
+  if (quantity > cartItem.product) {
     return NextResponse.json(
       { success: false, message: "Quantity exceeds stock" },
       { status: 400 }
