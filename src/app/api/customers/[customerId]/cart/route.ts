@@ -11,6 +11,7 @@ export async function GET(_: Request, context: { params: CartParams }) {
     select: {
       id: true,
       quantity: true,
+      product: true,
     },
   });
 
