@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { CartParams } from "../context";
-import { log } from "console";
 
 export async function GET(_: Request, context: { params: CartParams }) {
   const { customerId } = context.params;
@@ -39,7 +38,6 @@ export async function POST(request: Request, context: { params: CartParams }) {
     where: {
       userId: customerId,
       variantId,
-      quantity,
     },
   });
 
