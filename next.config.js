@@ -11,12 +11,6 @@ const nextConfig = {
     ],
     domains: ["wbkvxaekooiraoyacqpq.supabase.co"],
   },
-  experimental: {
-    mdxRs: true,
-  },
 };
 
-const withMdx = require("@next/mdx")();
-
-module.exports = withMdx(nextConfig);
-// module.exports = nextConfig;
+module.exports = nextConfig;

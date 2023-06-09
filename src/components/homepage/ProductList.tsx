@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
-import { ProductType } from "@/app/api/product/route";
 import { useQuery } from "@tanstack/react-query";
-import { error } from "console";
 
 export default function ProductList() {
   const { data, isLoading, isError, error } = useQuery({
@@ -25,7 +22,6 @@ export default function ProductList() {
       </div>
     );
 
-
   return (
     <>
       <div className='grid grid-cols-6  gap-3 max-w-[1440px] justify-center'>
@@ -43,22 +39,4 @@ export default function ProductList() {
       </div>
     </>
   );
-
-  // return (
-  //   <>
-  //     <div className='grid grid-cols-6  gap-3 max-w-[1440px] justify-center'>
-  //       {/* @ts-ignore */}
-  //       {products?.map((product: any) => (
-  //         <ProductCard
-  //           key={product.id}
-  //           title={product.name}
-  //           id={product.id}
-  //           detail={product.detail}
-  //           variant={product.variant}
-  //           image={product.imageUrls[0]}
-  //         />
-  //       ))}
-  //     </div>
-  //   </>
-  // );
 }
