@@ -10,11 +10,10 @@ export interface ProductType {
 }
 
 export async function GET(request: Request) {
-  console.log("GET /api/product");
   const { searchParams } = new URL(request.url);
-  console.log(searchParams);
+  const id = searchParams.get("id");
 
-  if (searchParams.get("id")) {
+  if (id) {
     const product = await prisma.product.findUnique({
       select: {
         id: true,
@@ -24,11 +23,9 @@ export async function GET(request: Request) {
         imageUrls: true,
       },
       where: {
-        id: searchParams.get("id") || undefined,
+        id: id || undefined,
       },
     });
-
-    console.log(searchParams.get("id"));
 
     return NextResponse.json({
       product,

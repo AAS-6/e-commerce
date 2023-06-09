@@ -18,7 +18,6 @@ export default function PaketData() {
       nominal: 0,
     },
     onSubmit: values => {
-      console.log(values);
       alert(JSON.stringify(values, null, 2));
     },
     validationSchema: PhoneSchema,

@@ -1,17 +1,21 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/lib/supabase";
-import { useDispatch } from "react-redux";
-import { toggleLoginOverlay } from "@/store/ui-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectLoginOverlay, toggleLoginOverlay } from "@/store/ui-slice";
 export default function LoginOverlay() {
+  const isLoginOverlay = useSelector(selectLoginOverlay);
+
   const dispatch = useDispatch();
 
   const handleLoginOverlay = () => {
     dispatch(toggleLoginOverlay());
   };
 
+  if (!isLoginOverlay) return null;
+
   return (
-    <div className='w-screen h-screen absolute flex items-center top-0 z-20'>
+    <div className='w-screen h-screen absolute flex items-center top-0 z-[60]'>
       <div
         className='w-full h-full fixed top-0 left-0'
         style={{
@@ -44,6 +48,7 @@ export default function LoginOverlay() {
           providers={["google"]}
           view='magic_link'
           showLinks={true}
+          
         />
       </div>
     </div>

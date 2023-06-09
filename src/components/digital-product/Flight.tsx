@@ -25,7 +25,6 @@ export default function Flight() {
   const getAirport = async () => {
     const res = await getPreviewAirportClient();
     setAirports(res);
-    console.log(res);
   };
 
   const formik = useFormik({
@@ -34,8 +33,6 @@ export default function Flight() {
       destination: "",
     },
     onSubmit: values => {
-        console.log("HAlo")
-      console.log(values);
       alert(JSON.stringify(values, null, 2));
     },
     validationSchema: PhoneSchema,

@@ -5,7 +5,7 @@ import {BsTwitter, BsFacebook, BsInstagram, BsLinkedin} from "react-icons/bs";
 export default function Footer() {
     return (
         <>
-            <div className="flex justify-evenly bg-[#5F72FF] py-[46px] text-white mt-6">
+            <footer className="flex justify-evenly bg-[#5F72FF] py-[46px] text-white mt-6">
                 <div className="flex flex-col justify-center items-center">
                     <Image 
                         src="/footer/logoWhite.svg"
@@ -69,7 +69,7 @@ export default function Footer() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </footer>
             <div>
                 <div className="flex justify-center items-center bg-[#0016B6] text-white py-[30px] ">&copy; AA-Shopping. Hak Cipta Dilindungi</div>
             </div>

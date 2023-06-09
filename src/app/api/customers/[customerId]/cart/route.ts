@@ -9,13 +9,22 @@ export async function GET(_: Request, context: { params: CartParams }) {
     where: {
       userId: customerId,
     },
-    include: {
+    select: {
+      id: true,
+      productId: true,
+      quantity: true,
       product: {
         select: {
           id: true,
           name: true,
-          detail: true,
-          variant: true,
+          variant: {
+            select: {
+              id: true,
+              name: true,
+              price: true,
+              stock: true,
+            },
+          },
         },
       },
     },
@@ -29,8 +38,7 @@ export async function GET(_: Request, context: { params: CartParams }) {
 
 export async function POST(request: Request, context: { params: CartParams }) {
   const { customerId } = context.params;
-  const { productId, quantity } = await request.json();
-  console.log(productId, quantity);
+  const { productId, quantity, variantId } = await request.json();
 
   const result = await prisma.cart.create({
     data: {
@@ -40,7 +48,21 @@ export async function POST(request: Request, context: { params: CartParams }) {
     },
   });
 
-  console.log("ADD CART", result);
+  // update product variant stock
+  const productVariant = await prisma.variant.findUnique({
+    where: {
+      id: variantId,
+    },
+  });
+
+  const updatedVariant = await prisma.variant.update({
+    where: {
+      id: variantId,
+    },
+    data: {
+      stock: (productVariant?.stock || quantity) - quantity,
+    },
+  });
 
   return NextResponse.json({
     customerId,
@@ -53,10 +75,7 @@ export async function DELETE(
   context: { params: CartParams }
 ) {
   const { searchParams } = new URL(request.url);
-  console.log(searchParams);
   const cartId = searchParams.get("cartId");
-
-  console.log("CART ID", cartId);
 
   if (!cartId) {
     return NextResponse.json({

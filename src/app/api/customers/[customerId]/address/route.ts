@@ -14,8 +14,6 @@ export async function GET(_: Request, context: { params: any }) {
     },
   })) as { addressId: string; firstName: string; lastName: string };
 
-  console.log('addressId', addressId)
-
   const result = await prisma.address.findUnique({
     where: {
       id: addressId,
@@ -28,8 +26,6 @@ export async function GET(_: Request, context: { params: any }) {
       jalan: true,
     },
   });
-
-  console.log(result);
 
   return NextResponse.json({
     result,

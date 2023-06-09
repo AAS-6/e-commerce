@@ -24,7 +24,6 @@ export default function Login() {
     <main>
       <div className='max-w-2xl mx-auto mt-20 flex flex-col gap-y-5'>
         <Logo width={256} height={256} />
-
         <Auth
           supabaseClient={supabase}
           providers={["google"]}

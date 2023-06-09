@@ -25,10 +25,8 @@ export default function Navbar() {
     };
   }, []);
 
-  console.log(session);
-
   return (
-    <header className='px-4 flex z-50 bg-white items-center justify-around py-3 sticky top-0'>
+    <header className='px-4 flex z-40 bg-white items-center justify-around py-3 sticky top-0'>
       <Logo height={144} width={144} />
       <Search />
       <Menu />

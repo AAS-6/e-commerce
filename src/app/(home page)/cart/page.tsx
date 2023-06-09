@@ -52,7 +52,6 @@ export default function Cart() {
       const productJson = await product.json();
 
       setProduct(productJson.items);
-      console.log("PRODUCT JSON", productJson);
     };
 
     if (userId) {
@@ -64,12 +63,9 @@ export default function Cart() {
     const getAddress = async () => {
       const address = await fetch(`/api/customers/${userId}/address`);
       const addressJson = await address.json();
-      console.log(addressJson.result);
 
       const firstName = addressJson.firstName;
       const lastName = addressJson.lastName;
-
-      console.log("addressJSON", addressJson);
 
       setFirstName(firstName);
 
@@ -101,11 +97,8 @@ export default function Cart() {
       });
 
       const paymentJson = await payment.json();
-      console.log(paymentJson);
 
       router.push(paymentJson.transaction.redirect_url);
-
-      console.log(paymentJson);
     };
 
     if (page === "PAYMENT") {
@@ -132,7 +125,7 @@ export default function Cart() {
                       className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4'
                       htmlFor='inline-first-name'
                     >
-                      Nama Depan 
+                      Nama Depan
                     </label>
                   </div>
                   <div className='md:w-full'>

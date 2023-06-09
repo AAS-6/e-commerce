@@ -2,13 +2,24 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import OrderCard from "./OrderCard";
 import { supabase } from "@/lib/supabase";
+import { useQuery } from "@tanstack/react-query";
 
 type CartListProps = {
   product: any[];
 };
 
-export default function CartList({ product }: CartListProps) {
+export default function CartList() {
   const [userId, setUserId] = useState<string>();
+
+  const { data: cart, error } = useQuery({
+    queryKey: ["cart", userId],
+    queryFn: async () => {
+      const res = await fetch(`/api/customers/${userId}/cart`);
+      const data = await res.json();
+
+      return data;
+    },
+  });
 
   useEffect(() => {
     const getId = async () => {
@@ -21,13 +32,13 @@ export default function CartList({ product }: CartListProps) {
 
   const handleDelete = async (cartId: string) => {
     const res = await fetch(`/api/customers/${userId}/cart?cartId=${cartId}`);
-    const data = await res.json()
+    const data = await res.json();
   };
 
   return (
     <div>
-      {product &&
-        product.map((item: any) => {
+      {/* {cart &&
+        // cart.map((item: any) => {
           return (
             <div
               className='bg-white py-6 px-12 border-2 mx-[90px] rounded-lg my-6'
@@ -94,7 +105,7 @@ export default function CartList({ product }: CartListProps) {
               </div>
             </div>
           );
-        })}
+        })} */}
     </div>
   );
 }

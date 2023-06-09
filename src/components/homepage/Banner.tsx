@@ -77,7 +77,6 @@ export default function Banner() {
                   key={idx}
                   onClick={() => {
                     instanceRef.current?.moveToIdx(idx);
-                    console.log(idx);
                   }}
                   style={{
                     scale: currentSlide === idx ? 1.5 : "",
