@@ -40,29 +40,32 @@ export async function POST(request: Request, context: { params: CartParams }) {
   const { customerId } = context.params;
   const { productId, quantity, variantId } = await request.json();
 
-  const result = await prisma.cart.create({
-    data: {
+  const existingCartItem = await prisma.cart.findFirst({
+    where: {
       userId: customerId,
       productId,
-      quantity,
     },
   });
 
-  // update product variant stock
-  const productVariant = await prisma.variant.findUnique({
-    where: {
-      id: variantId,
-    },
-  });
-
-  const updatedVariant = await prisma.variant.update({
-    where: {
-      id: variantId,
-    },
-    data: {
-      stock: (productVariant?.stock || quantity) - quantity,
-    },
-  });
+  let result;
+  if (existingCartItem) {
+    result = await prisma.cart.update({
+      where: {
+        id: existingCartItem.id,
+      },
+      data: {
+        quantity: existingCartItem.quantity + quantity,
+      },
+    });
+  } else {
+    result = await prisma.cart.create({
+      data: {
+        userId: customerId,
+        productId,
+        quantity,
+      },
+    });
+  }
 
   return NextResponse.json({
     customerId,
