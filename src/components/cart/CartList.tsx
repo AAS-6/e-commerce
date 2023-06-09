@@ -28,24 +28,24 @@ export default function CartList() {
 
   console.log(cart);
 
-  return <></>
+  // return <></>;
 
-  // return (
-  //   <ul>
-  //     {cart &&
-  //       cart.items.length > 0 &&
-  //       cart?.items.map((item: any) => {
-  //         return (
-  //           <OrderCard
-  //             price={item.product.variant[0].price}
-  //             name={item.product.name}
-  //             quantity={item.quantity}
-  //             img={item.product.image}
-  //             id={item.id}
-  //             key={item.id}
-  //           />
-  //         );
-  //       })}
-  //   </ul>
-  // );
+  return (
+    <ul>
+      {cart &&
+        cart.items.length > 0 &&
+        cart?.items.map((item: any) => {
+          return (
+            <OrderCard
+              price={item.variant.price}
+              name={item.variant.product.name}
+              quantity={item.quantity}
+              img={item.variant.product.imageUrls[0]}
+              id={item.variantId}
+              key={item.variantId}
+            />
+          );
+        })}
+    </ul>
+  );
 }

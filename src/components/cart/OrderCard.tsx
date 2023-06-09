@@ -83,7 +83,7 @@ const OrderCard = ({
     <div className='grid grid-cols-4 rounded-md my-5 w-8/12 py-2'>
       <div className='flex space-x-[24px] items-center'>
         <Image
-          src='/cart/list_image.svg'
+          src={img}
           width={120}
           height={120}
           alt={"picture"}
