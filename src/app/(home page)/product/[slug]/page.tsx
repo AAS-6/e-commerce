@@ -3,7 +3,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import { supabase } from "@/lib/supabase";
-import TextTruncate from "react-text-truncate";
 import { useDispatch } from "react-redux";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { setCartOverlay } from "@/store/ui-slice";
@@ -159,7 +158,10 @@ export default function ProductDetail({ params }: any) {
         ) : (
           <div>Loading...</div>
         )}
-        <TextTruncate line={5} text={data?.detail} />
+        {/* TODO: use a better approach than using arbitrary value */}
+        <div className="whitespace-pre-wrap overflow-y-scroll h-[10em] [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+          {data?.detail}
+        </div>
         <div className='flex items-center gap-x-6 mt-4'>
           <p>Kuantitas</p>
           <div className='flex rounded-md overflow-hidden bg-mangoTango border border-black font-medium'>
