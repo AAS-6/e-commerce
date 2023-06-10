@@ -10,6 +10,9 @@ export async function POST(request: Request) {
     serverKey: process.env.MIDTRANS_SERVER_KEY,
   });
 
+  console.log(total);
+  console.log(typeof total);
+
   const transaction = await snap
     .createTransaction({
       transaction_details: {

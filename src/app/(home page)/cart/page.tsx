@@ -1,11 +1,10 @@
 "use client";
+
 import CartList from "@/components/cart/CartList";
 import { supabase } from "@/lib/supabase";
 import { setPage } from "@/store/ui-slice";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { get } from "https";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Cart() {
@@ -16,7 +15,6 @@ export default function Cart() {
   const handleNext = () => {
     if (page === "SHIPPING") {
       getPayment();
-      dispatch(setPage("PAYMENT"));
     }
 
     if (page === "CART") {
@@ -84,7 +82,8 @@ export default function Cart() {
     },
 
     onSuccess: data => {
-      router.push(data.redirect_url);
+      console.log(data);
+      router.push(data.transaction.redirect_url);
     },
   });
 
