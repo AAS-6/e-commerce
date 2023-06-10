@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import Search from "./Search";
 import Logo from "./Logo";
-import Menu from "./Cart";
+import Menu from "./Profile";
 import NavbarButton from "../button/NavbarButton";
 import Profile from "../button/Profile";
 

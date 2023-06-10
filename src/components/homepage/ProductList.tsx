@@ -10,7 +10,7 @@ export default function ProductList() {
     queryFn: async () => {
       const res = await fetch("/api/product");
 
-      const { product } = await res.json();
+      const product = await res.json();
 
       return product;
     },
@@ -25,7 +25,6 @@ export default function ProductList() {
       </div>
     );
 
-
   return (
     <>
       <div className='grid grid-cols-6  gap-3 max-w-[1440px] justify-center'>
@@ -38,6 +37,8 @@ export default function ProductList() {
             detail={product.detail}
             variant={product.variant}
             image={product.imageUrls[0]}
+            sold={product.sold}
+            merchantName={product.merchant.name}
           />
         ))}
       </div>

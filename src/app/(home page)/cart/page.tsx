@@ -5,12 +5,17 @@ import { supabase } from "@/lib/supabase";
 import { setPage } from "@/store/ui-slice";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Cart() {
   const page = useSelector((state: any) => state.ui.page);
   const router = useRouter();
   const dispatch = useDispatch();
+  const [user, setUser] = useState<{
+    id: string;
+    addressId: string;
+  }>();
 
   const handleNext = () => {
     if (page === "SHIPPING") {
@@ -19,27 +24,47 @@ export default function Cart() {
 
     if (page === "CART") {
       dispatch(setPage("SHIPPING"));
+      updateAddress();
     }
   };
 
-  const { data: address, isLoading: isLoadingAddress } = useQuery({
-    queryKey: ["address"],
-    queryFn: async () => {
-      const session = await supabase.auth.getSession();
-      const userId = session?.data.session?.user.id;
+  const {
+    data: address,
+    mutate: updateAddress,
+    isLoading: loadingAddress,
+  } = useMutation({
+    mutationFn: async () => {
+      let userId = user?.id;
 
-      const data = await fetch(`/api/customers/${userId}/address`);
-      const result = await data.json();
+      if (!user) {
+        const session = await supabase.auth.getSession();
+        userId = session?.data.session?.user.id;
+      }
 
-      return result;
+      const res = await fetch(`/api/address?userId=${userId}`);
+
+      const data = await res.json();
+
+      return data.result;
+    },
+
+    onSuccess: data => {
+      console.log(data);
+      if (!data?.addressLine1) {
+        router.push("/profile");
+      }
     },
   });
 
   const { data: cart, isLoading: isLoadingCart } = useQuery({
     queryKey: ["cart"],
     queryFn: async () => {
-      const session = await supabase.auth.getSession();
-      const userId = session?.data.session?.user.id;
+      let userId = user?.id;
+
+      if (!user) {
+        const session = await supabase.auth.getSession();
+        userId = session?.data.session?.user.id;
+      }
 
       const data = await fetch(`/api/customers/${userId}/cart`);
       const result = await data.json();
@@ -51,17 +76,28 @@ export default function Cart() {
   const { mutate: getPayment } = useMutation({
     mutationKey: ["payment"],
     mutationFn: async () => {
-      const session = await supabase.auth.getSession();
-      const userId = session?.data.session?.user.id;
+      let userId = user?.id;
+
+      if (!user) {
+        const session = await supabase.auth.getSession();
+        userId = session?.data.session?.user.id;
+      }
 
       const total = cart.items.reduce((acc: any, curr: any) => {
         return acc + curr.variant.price * curr.quantity;
       }, 0);
 
-      console.log({
-        userId,
-        cart,
-        total,
+      const order = await fetch(`/api/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          cart,
+          total,
+          addressId: address?.id,
+        }),
       });
 
       const data = await fetch(`/api/payment`, {
@@ -98,7 +134,7 @@ export default function Cart() {
         <form>
           <div className='max-w-2xl mx-auto gap-y-5 justify-center shadow-2xl rounded-2xl'>
             <div className='p-9'>
-              <form className='w-full mt-4'>
+              <div className='w-full mt-4'>
                 <div className='md:flex md:items-center md:justify-between mb-6'>
                   <div className='md:w-4/12'>
                     <label
@@ -110,7 +146,7 @@ export default function Cart() {
                   </div>
                   <div className='md:w-full'>
                     <h1 className='appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]'>
-                      {address.firstName}
+                      {address?.firstName}
                     </h1>
                   </div>
                 </div>
@@ -125,7 +161,7 @@ export default function Cart() {
                   </div>
                   <div className='md:w-full'>
                     <h1 className='appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]'>
-                      {address.lastName}
+                      {address?.lastName}
                     </h1>
                   </div>
                 </div>
@@ -139,14 +175,21 @@ export default function Cart() {
                       Alamat
                     </label>
                   </div>
-                  <div className='flex-col space-y-4 md:w-9/12'>
-                    <h1 className='appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]'>
-                      {address.result.jalan} , {address.result.Regency.name} ,
-                      {address.result.Province.name}
-                    </h1>
-                  </div>
+                  {address && (
+                    <div className='flex-col space-y-4 md:w-9/12'>
+                      <h1 className='appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-[#5F72FF]'>
+                        {`${address?.addressLine1} ${address.city_v2.type} ${address.city_v2.cityName}, ${address.city_v2.provinceName}`}
+                      </h1>
+                    </div>
+                  )}
+
+                  {loadingAddress && (
+                    <div className='flex-col space-y-4 md:w-9/12'>
+                      Loading ...
+                    </div>
+                  )}
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </form>

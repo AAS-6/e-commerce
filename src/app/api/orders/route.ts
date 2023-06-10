@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  const orderDetails = cardItems.map((item) => ({
+  const orderDetails = cardItems.map(item => ({
     orderId: newOrder.id,
     variantId: item.variantId,
     merchantId: item.variant.product.merchantId,
@@ -74,9 +74,81 @@ export async function POST(request: NextRequest) {
     price: item.variant.price,
   }));
 
-  const result = await prisma.order_details.createMany({
+  const result = prisma.order_details.createMany({
     data: orderDetails,
   });
+
+  const deleteCart = prisma.cart.deleteMany({
+    where: {
+      id: {
+        in: cartItemIds,
+      },
+    },
+  });
+
+  // edit stock
+  const variantIds = cardItems.map(item => item.variantId);
+  const variants = await prisma.variant.findMany({
+    where: {
+      id: {
+        in: variantIds,
+      },
+    },
+  });
+
+  const newVariants = variants.map(variant => {
+    const cartItem = cardItems.find(item => item.variantId === variant.id);
+    return {
+      ...variant,
+      stock: variant.stock - (cartItem?.quantity || 0),
+    };
+  });
+
+  const updateStock = prisma.variant.updateMany({
+    where: {
+      id: {
+        in: variantIds,
+      },
+    },
+    data: newVariants,
+  });
+
+  // update product sold
+  const productIds = cardItems.map(item => item.variant.product.id);
+  const products = await prisma.product.findMany({
+    where: {
+      id: {
+        in: productIds,
+      },
+    },
+  });
+
+  const newProducts = products.map(product => {
+    const cartItem = cardItems.find(
+      item => item.variant.product.id === product.id
+    );
+    return {
+      ...product,
+      sold: product.sold + (cartItem?.quantity || 0),
+    };
+  });
+
+  const updateSold = prisma.product.updateMany({
+    where: {
+      id: {
+        in: productIds,
+      },
+    },
+    data: newProducts,
+  });
+
+  await prisma.$transaction([
+    result,
+    deleteCart,
+    updateStock,
+    updateSold,
+  ]);
+
 
   return NextResponse.json({
     success: true,

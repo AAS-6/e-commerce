@@ -30,7 +30,6 @@ model users {
   address_users_addressIdToaddress address?    @relation("users_addressIdToaddress", fields: [addressId], references: [id], onDelete: Restrict, onUpdate: NoAction)
   users                            auth_users  @relation(fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   whishlist                        whishlist[]
-  address                          address[]   @relation("AddressToUser")
 
   @@schema("public")
 }
@@ -53,27 +52,16 @@ model merchant {
 }
 
 model address {
-  id                                         String     @id(map: "Address_pkey") @default(dbgenerated("gen_random_uuid()"))
-  jalan                                      String?
-  rt                                         String?
-  rw                                         String?
-  kodePos                                    String
-  createdAt                                  DateTime   @default(now())
-  updatedAt                                  DateTime   @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
-  districtId                                 Int
-  provinceId                                 Int
-  regencyId                                  Int
-  villageId                                  BigInt
-  District                                   district   @relation(fields: [districtId], references: [id], onUpdate: NoAction)
-  Province                                   province   @relation(fields: [provinceId], references: [id], onUpdate: NoAction)
-  Regency                                    regency    @relation(fields: [regencyId], references: [id], onUpdate: NoAction)
-  village                                    village    @relation(fields: [villageId], references: [id], onUpdate: NoAction)
-  Merchant                                   merchant[]
-  orders                                     orders[]
-  shipping_shipping_addressIdToaddress       shipping[] @relation("shipping_addressIdToaddress")
-  shipping_shipping_originAddressIdToaddress shipping[] @relation("shipping_originAddressIdToaddress")
-  users_users_addressIdToaddress             users[]    @relation("users_addressIdToaddress")
-  User                                       users[]    @relation("AddressToUser")
+  id                             String     @id(map: "address_duplicate_pkey") @default(dbgenerated("gen_random_uuid()"))
+  addressLine1                   String?
+  postalCode                     String
+  createdAt                      DateTime   @default(now())
+  updatedAt                      DateTime   @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  addressLine2                   String?
+  cityId                         Int?
+  city_v2                        city_v2?   @relation(fields: [cityId], references: [cityId], onDelete: Restrict, onUpdate: NoAction)
+  Merchant                       merchant[]
+  users_users_addressIdToaddress users[]    @relation("users_addressIdToaddress")
 
   @@schema("public")
 }
@@ -101,6 +89,7 @@ model product {
   detail        String
   reviewId      String?
   category      Category
+  sold          Int             @default(0)
   order_details order_details[]
   merchant      merchant        @relation(fields: [merchantId], references: [id], onUpdate: NoAction)
   reviews       reviews[]
@@ -111,21 +100,19 @@ model product {
 }
 
 model shipping {
-  id                                        String   @id(map: "Shipping_pkey") @default(dbgenerated("gen_random_uuid()"))
-  createdAt                                 DateTime @default(now())
-  updatedAt                                 DateTime @default(now())
-  orderId                                   String
-  status                                    String
-  courier                                   String
-  resi                                      String
-  cost                                      Float
-  service                                   String
-  etd                                       String
-  addressId                                 String?
-  originAddressId                           String
-  address_shipping_addressIdToaddress       address? @relation("shipping_addressIdToaddress", fields: [addressId], references: [id], onUpdate: NoAction)
-  Order                                     orders   @relation(fields: [orderId], references: [id], onUpdate: NoAction)
-  address_shipping_originAddressIdToaddress address  @relation("shipping_originAddressIdToaddress", fields: [originAddressId], references: [id], onUpdate: NoAction)
+  id              String   @id(map: "Shipping_pkey") @default(dbgenerated("gen_random_uuid()"))
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
+  orderId         String
+  status          String
+  courier         String
+  resi            String
+  cost            Float
+  service         String
+  etd             String
+  addressId       String?
+  originAddressId String
+  Order           orders   @relation(fields: [orderId], references: [id], onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -147,11 +134,10 @@ model variant {
 }
 
 model village {
-  id         BigInt    @id(map: "Village_pkey")
+  id         BigInt   @id(map: "Village_pkey")
   name       String
   districtId Int
-  address    address[]
-  District   district  @relation(fields: [districtId], references: [id], onUpdate: NoAction)
+  District   district @relation(fields: [districtId], references: [id], onUpdate: NoAction)
 
   @@schema("public")
 }
@@ -172,7 +158,6 @@ model district {
   id        Int       @id(map: "District_pkey") @default(autoincrement())
   name      String
   regencyId Int
-  address   address[]
   regencies regency   @relation(fields: [regencyId], references: [id], onUpdate: NoAction)
   village   village[]
 
@@ -187,7 +172,6 @@ model orders {
   status        String
   destAddressId String
   order_details order_details[]
-  address       address         @relation(fields: [destAddressId], references: [id], onUpdate: NoAction)
   users         users           @relation(fields: [userId], references: [id], onUpdate: NoAction)
   shipping      shipping[]
 
@@ -197,7 +181,6 @@ model orders {
 model province {
   id      Int       @id(map: "Province_pkey") @default(autoincrement())
   name    String
-  address address[]
   regency regency[]
 
   @@schema("public")
@@ -482,7 +465,6 @@ model regency {
   id         Int        @id(map: "Regency_pkey") @default(autoincrement())
   name       String
   provinceId Int
-  address    address[]
   district   district[]
   province   province   @relation(fields: [provinceId], references: [id], onUpdate: NoAction)
 
@@ -515,6 +497,27 @@ model order_details {
   orders     orders    @relation(fields: [orderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   product    product   @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   variant    variant   @relation(fields: [variantId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model city_v2 {
+  cityId       Int         @id @default(autoincrement())
+  cityName     String
+  provinceId   Int
+  provinceName String
+  type         String
+  postalCode   String?
+  address      address[]
+  province_v2  province_v2 @relation(fields: [provinceId], references: [id], onUpdate: NoAction)
+
+  @@schema("public")
+}
+
+model province_v2 {
+  id      Int       @id(map: "province_v1_pkey") @default(autoincrement())
+  name    String
+  city_v2 city_v2[]
 
   @@schema("public")
 }

@@ -3,6 +3,7 @@ import uiReducer from "./ui-slice";
 import digitalReducer from "./digital-slice";
 import authReducer from "./auth-slice";
 import cartReducer from "./cart-slice";
+import userReducer from "./user-slice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     digital: digitalReducer,
     auth: authReducer,
     cart: cartReducer,
+    user: userReducer,
   },
 });
 

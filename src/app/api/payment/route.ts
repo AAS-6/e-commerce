@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import midTrans from "midtrans-client";
+import { prisma } from "@/lib/prisma";
 
 export async function POST(request: Request) {
   const { total, userId } = await request.json();
@@ -33,3 +34,4 @@ export async function POST(request: Request) {
 
   return NextResponse.json({ transaction });
 }
+

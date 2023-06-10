@@ -36,7 +36,7 @@ export default function ProductDetail({ params }: any) {
     queryFn: async id => {
       const res = await fetch("/api/product?id=" + params.slug);
 
-      const { product } = await res.json();
+      const product  = await res.json();
 
       return product;
     },
@@ -83,7 +83,7 @@ export default function ProductDetail({ params }: any) {
     mutate({
       userId: userId,
       productId: params.slug,
-      quantity: 1,
+      quantity,
       variantId: data?.variant[selectedVariant].id,
     });
   };

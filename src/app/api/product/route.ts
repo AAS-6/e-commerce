@@ -12,6 +12,7 @@ export interface ProductType {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get("id");
+  const limit = parseInt(searchParams.get("limit") || "99999999999999");
 
   if (id) {
     const product = await prisma.product.findUnique({
@@ -21,6 +22,22 @@ export async function GET(request: Request) {
         detail: true,
         variant: true,
         imageUrls: true,
+        sold: true,
+        merchant: {
+          select: {
+            name: true,
+            address: {
+              include: {
+                city_v2: {
+                  select: {
+                    cityName: true,
+                    provinceName: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       where: {
         id: id || undefined,
@@ -28,7 +45,7 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.json({
-      product,
+      ...product,
     });
   } else {
     const product = await prisma.product.findMany({
@@ -37,12 +54,27 @@ export async function GET(request: Request) {
         name: true,
         detail: true,
         variant: true,
+        sold: true,
         imageUrls: true,
+        merchant: {
+          select: {
+            name: true,
+            address: {
+              include: {
+                city_v2: {
+                  select: {
+                    cityName: true,
+                    provinceName: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
+      take: limit,
     });
 
-    return NextResponse.json({
-      product,
-    });
+    return NextResponse.json([...product]);
   }
 }

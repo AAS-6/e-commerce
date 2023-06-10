@@ -28,7 +28,6 @@ export default function CartList() {
 
   console.log(cart);
 
-  // return <></>;
 
   return (
     <ul>
@@ -41,8 +40,8 @@ export default function CartList() {
               name={item.variant.product.name}
               quantity={item.quantity}
               img={item.variant.product.imageUrls[0]}
-              id={item.variantId}
-              key={item.variantId}
+              id={item.id}
+              key={item.id}
             />
           );
         })}

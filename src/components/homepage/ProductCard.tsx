@@ -10,14 +10,17 @@ type CardProps = {
   id: string;
   detail: string;
   image: string;
+  merchantName: string;
+  sold: number;
 };
 
 export default function ProductCard({
   title,
   variant,
-  detail,
   id,
   image,
+  merchantName,
+  sold,
 }: CardProps) {
   // create currency formatter
   const formatter = Intl.NumberFormat("id-ID", {
@@ -44,14 +47,15 @@ export default function ProductCard({
           </div>
           <p className='font-bold text-gray-700 text-[13.5px]'>{price}</p>
           <p className='text-[10.5px] mt-2'>
-            <span className='font-semibold'>IKEA</span> - Jakarta Barat
+            <span className='font-semibold'>{merchantName}</span> - Jakarta
+            Barat
           </p>
           <div className='flex text-[10.5px] items-center mt-2'>
             <div className='flex items-center border-r-2'>
               <AiFillStar />
               <p className='px-[6px]'>4.9</p>
             </div>
-            <p className='px-2'>Terjual 1.4 rb</p>
+            <p className='px-2'>Terjual {sold}</p>
           </div>
         </div>
       </div>
