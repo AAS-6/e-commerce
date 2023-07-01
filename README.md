@@ -12,7 +12,6 @@ Membuat aplikasi *e-commerce* dengan mengimplementasikan:
 - oAuth: Google
 ### Back End
 - Payment Gateway: Midtrans
-- Shipping Estimation: Raja Ongkir
 - Backend Server: Next JS (Node JS)
 ### Front End
 - FE Framework: Next JS (ReactJS)
